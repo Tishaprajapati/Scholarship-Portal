@@ -10,6 +10,7 @@ import { Avatar, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { LogOut, User2 } from 'lucide-react'
 //import Button from '../shared/Button';
+//import { userSelector } from 'react-redux'
 
 const Navbar = () => 
     {
@@ -25,6 +26,8 @@ const Navbar = () =>
                         <li>Home</li>
                         <Link to="/aboutus"><li>about us</li></Link>
                        <Link to="/contactus"> <li>contact us</li></Link>
+                       <li><Link to ="/jobs">Scholarship</Link></li>
+                        <li><Link to ="/browse">Browse</Link></li>
                     </ul>
                     {
                         !user ? (
@@ -47,22 +50,21 @@ const Navbar = () =>
                                                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                                             </Avatar>
                                             <div>
-                                                <h4 className='font-medium'>Riya Rathod</h4>
-                                                {/* <p className='text-sm text-muted-foreground'>Lorem ipsum dolor sit amet.</p> */}
+                                                <h4 className='font-medium'>{user?.fullname}</h4>
+                                                <p className='text-sm text-muted-foreground'>Student</p>
                                             </div>
                                         </div>
                                         <div className='flex flex-col my-2 text-gray-600'>
-                                            {/* <div className='flex w-fit items-center gap-2 cursor-pointer'>
+                                            <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                                 <User2 />
-                                                <Button variant="link">View Profile</Button>
-                                            </div> */}
+                                                <Button variant="link"><Link to="/profile">View Profile</Link></Button>
+                                            </div>
                                             <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                                 <LogOut />
                                                 <Button variant="link">Logout</Button>
                                             </div>
                                         </div>
                                     </div>
-
 
                                 </PopoverContent>
                             </Popover>

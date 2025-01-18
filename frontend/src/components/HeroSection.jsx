@@ -22,12 +22,8 @@ const HeroSection = () => {
            </Button>
         </div>
         <div className="flex flex-col gap-5 my-10">
-            {/* Available Scholarships Button */}
-            <Link to="/availablescholarships">
-                <Button className="mx-auto px-4 py-2 rounded-full bg-[#5a30a4] hover:bg-[#4e2593] ">
-                    Check Available Scholarships
-                </Button>
-            </Link>
+            
+           
         </div>
     </div>
     </div>

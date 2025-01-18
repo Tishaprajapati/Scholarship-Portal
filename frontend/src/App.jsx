@@ -6,13 +6,18 @@ import { RouterProvider } from 'react-router'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Home from './components/Home'
-import AvailableScholarships from './components/ui/AvailableScholarships'; 
+
 
 import ContactUs from './components/ui/contactus'
 import AboutUs from './components/ui/aboutus'
 
 import Chatbot from './components/chatbot'
-import Scholarship from './components/ui/scholarship'
+
+
+import JobDescription from './components/JobDescription'
+import Jobs from './components/Jobs'
+import Browse from './components/Browse'
+import Profile from './components/Profile'
 const appRouter =createBrowserRouter([
   {
     path:'/',
@@ -20,9 +25,28 @@ const appRouter =createBrowserRouter([
     element:<Home/>
   },
   {
+    path:'/profile',
+    element:<Profile/>
+  },
+  {
     path:'/aboutus',
     // eslint-disable-next-line react/jsx-no-undef
     element:<AboutUs/>
+  },
+  {
+    path:'/description/:id',
+     //eslint-disable-next-line react/jsx-no-undef
+    element:<JobDescription/>
+  },
+  {
+    path:'/Jobs',
+    // eslint-disable-next-line react/jsx-no-undef
+    element:<Jobs/>
+
+  },
+  {
+    path:'/browse',
+    element:<Browse/>
   },
   {
     path:'/login',
@@ -44,16 +68,9 @@ const appRouter =createBrowserRouter([
      //eslint-disable-next-line react/jsx-no-undef
     element:<Chatbot/>
   },
-  {
-    path: '/availablescholarships', // Add this route
-    element: <AvailableScholarships />,
-  },
  
-  {
-    path:'/scholarship',
-    // eslint-disable-next-line react/jsx-no-undef
-    element:<Scholarship/>
-  },
+ 
+ 
 ])
 
 function App() {
