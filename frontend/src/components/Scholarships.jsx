@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 
 const Scholarships = () => {
   const { allScholarships=[] } = useSelector(store => store.scholarship);
+  
 
   return (
     <div>
@@ -26,9 +27,10 @@ const Scholarships = () => {
                 <div className='grid grid-cols-3 gap-4'>
                   {
                     allScholarships.map((scholarship) => 
-                    <div key={scholarship._id} >
-                         <Scholarship scholarship={scholarship}/>
-                      </div>
+                      <Scholarship
+                    key={scholarship._id} 
+                    scholarship={scholarship}
+                />
                     )
                   }
                 </div>

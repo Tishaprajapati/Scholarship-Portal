@@ -48,7 +48,7 @@ const Navbar = () =>
                         <Link to="/"><li>Home</li></Link>
                         <Link to="/aboutus"><li>about us</li></Link>
                        <Link to="/contactus"> <li>contact us</li></Link>
-                       <li><Link to ="/Scholarships">Scholarship</Link></li>
+                       <li><Link to ="/Scholarship">Scholarship</Link></li>
                         <li><Link to ="/browse">Browse</Link></li>
                     </ul>
                     {
@@ -110,7 +110,7 @@ const Navbar = () =>
                                          <div className='flex flex-col my-2 text-gray-600'>
                                              <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                                  <User2 />
-                                                 <Button variant="link"><Link to="/profile">View Profile</Link></Button>
+                                                 <Button variant="link"><Link to="/Profile">View Profile</Link></Button>
                                              </div>
                                              <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                                 <LogOut />

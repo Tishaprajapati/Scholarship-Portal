@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import Navbar from './components/shared/navbar'
+//import Navbar from './components/shared/navbar'
 import { createBrowserRouter } from 'react-router-dom'
 import { RouterProvider } from 'react-router'
 import Login from './components/auth/Login'
@@ -18,6 +18,7 @@ import Browse from './components/Browse'
 import Profile from './components/Profile'
 import LatestScholarships from './components/LatestScholarships'
 import ScholarshipDescription from './components/ScholarshipDescription'
+import Scholarships from './components/scholarships'
 const appRouter =createBrowserRouter([
   {
     path:'/',
@@ -42,6 +43,12 @@ const appRouter =createBrowserRouter([
     path:'/Scholarships',
     // eslint-disable-next-line react/jsx-no-undef
     element:<LatestScholarships/>
+
+  },
+  {
+    path:'/Scholarship',
+    // eslint-disable-next-line react/jsx-no-undef
+    element:<Scholarships/>
 
   },
   {
