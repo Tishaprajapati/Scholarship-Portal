@@ -5,15 +5,21 @@ import Navbar from './shared/Navbar'
 import HeroSection from './HeroSection'
 import Chatbot from './chatbot'
 import CategoryCarousel from './CategoryCarousel'
-import LatestJobs from './LatestJobs'
+import LatestScholarships from './LatestScholarships'
 import Footer from './shared/Footer'
+
+import useGetAllScholarships from '@/hooks/useGetAllScholarships'
+
 const Home = () => {
+  useGetAllScholarships();
+
   return (
+    
     <div>
           <Navbar/>
           <HeroSection/>
           <CategoryCarousel/>
-          <LatestJobs/> 
+          <LatestScholarships/> 
           <Footer/>
           <Chatbot/>
     </div>

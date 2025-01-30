@@ -55,6 +55,11 @@ const scholarshipSchema = new mongoose.Schema(
             type: [String],
             required: true,
             default: ["Aadhar Card", "Last Year Marksheet", "Fee Receipt", "Father's Income Certificate", "Ration Card", "Father's/Mother's PAN Card"]
+        },
+        adminId: {
+            type: String,
+            required: true,
+            unique: true // Keep this unique if you need it
         }
     },
     {

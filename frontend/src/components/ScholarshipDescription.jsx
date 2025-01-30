@@ -2,7 +2,7 @@
 import React from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
-const JobDescription = () => {
+const ScholarshipDescription = () => {
     const isApplied = false;
     return (
         <div className='max-w-7xl mx-auto my-10'>
@@ -29,4 +29,4 @@ const JobDescription = () => {
         </div>
     )
 }
-export default JobDescription
+export default ScholarshipDescription

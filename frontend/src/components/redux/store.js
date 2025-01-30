@@ -1,42 +1,43 @@
 /* eslint-disable no-unused-vars */
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authSlice from "./authSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import authSlice from './authSlice';
+import scholarshipSlice from './scholarshipSlice';
+// import {
+//     persistStore,
+//     persistReducer,
+//     FLUSH,
+//     REHYDRATE,
+//     PAUSE,
+//     PERSIST,
+//     PURGE,
+//     REGISTER,
+// } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
 
-import {
-    persistStore,
-    persistReducer,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
-
-const persistConfig = {
-    key: 'root',
-    version: 1,
-    storage,
-};
-
-const rootReducer = combineReducers({
-    auth: authSlice,
-  
-});
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistConfig = {
+//     key: 'root',
+//     version: 1,
+//     storage,
+// };
 
 const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
-        }),
+    reducer:{
+        auth: authSlice,
+        scholarship : scholarshipSlice
+    }
 });
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const persistor = persistStore(store); // Export the persistor
+// const store = configureStore({
+//     reducer: persistedReducer,
+//     middleware: (getDefaultMiddleware) =>
+//         getDefaultMiddleware({
+//             serializableCheck: {
+//                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//             },
+//         }),
+// });
+
+//export const persistor = persistStore(store); // Export the persistor
 export default store; // Export the store

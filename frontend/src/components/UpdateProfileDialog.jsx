@@ -42,20 +42,19 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       
         try {
             setLoading(true);
-            const res = await axios.put(`${USER_API_END_POINT}/profile/update`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                withCredentials: true
+            const res = await axios.put(`${USER_API_END_POINT}/update/profile`, formData, {
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true,
             });
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
                 toast.success(res.data.message);
             }
         } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
-        } finally{
+                    console.error("Error Response:", error.response?.data || error.message);
+                    toast(error.response?.data?.message || "Something went wrong");
+                }
+        finally{
             setLoading(false);
         }
         setOpen(false);

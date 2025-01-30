@@ -3,9 +3,18 @@ import { Scholarship } from "../models/scholarship.model.js";
 // Create a new scholarship
 export const createScholarship = async (req, res) => {
     try {
-        const { title, organizationName, description, eligibility, amount, deadline } = req.body;
+        const {
+            title,
+            organizationName,
+            description,
+            eligibility,
+            amount,
+            deadline,
+            documentsRequired,
+            adminId // Add this
+        } = req.body;
 
-        if (!title || !organizationName || !description || !eligibility || !amount || !deadline) {
+        if (!title || !organizationName || !description || !eligibility || !amount || !deadline || !adminId) {
             return res.status(400).json({
                 message: "All fields are required",
                 success: false
@@ -18,7 +27,9 @@ export const createScholarship = async (req, res) => {
             description,
             eligibility,
             amount,
-            deadline
+            deadline,
+            documentsRequired,
+            adminId // Include this
         });
 
         return res.status(201).json({
@@ -40,7 +51,7 @@ export const getAllScholarships = async (req, res) => {
     try {
         const scholarships = await Scholarship.find({});
 
-        if (!scholarships || scholarships.length === 0) {
+        if (!scholarships ) {
             return res.status(404).json({
                 message: "No scholarships found.",
                 success: false

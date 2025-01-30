@@ -49,6 +49,7 @@ export const register = async (req, res) => {
                 success: false
             });
         }
+        
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({
             fullname,
@@ -122,8 +123,9 @@ export const login = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber} = req.body;
+        
         const userId = req.id;
-
+        const phoneRegex = /^\d{10}$/;
         let user = await User.findById(userId);
         if (!user) {
             return res.status(400).json({
@@ -141,7 +143,7 @@ export const updateProfile = async (req, res) => {
         if (fullname) user.fullname = fullname;
         if (email) user.email = email;
         if (phoneNumber) user.phoneNumber = phoneNumber;
-        const phoneRegex = /^\d{10}$/;
+       
         
         await user.save();
 
@@ -160,8 +162,9 @@ export const logout = async (req, res) => {
         return res.status(200).cookie("token", "", { maxAge: 0 }).json({
             message: "Logged out successfully.",
             success: true
-        });
+        })
     } catch (error) {
         console.log(error);
     }
+
 };

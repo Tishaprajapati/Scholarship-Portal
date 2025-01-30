@@ -6,9 +6,9 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
 import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
 
-const Job = () => {
+const Scholarship = ({scholarship}) => {
   const navigate = useNavigate();
-  const jobId = "dndjksadff";
+ const scholarshipId="jhsgdywfdchdjcgy";
   return (
     <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
       <div className='flex place-items-center justify-between'>
@@ -24,25 +24,26 @@ const Job = () => {
           </Avatar>
         </Button>
         <div>
-          <h1 className='font-medium text-lg'>Indira Gandhi Scholarship</h1>
-          <p className='text-sm text-gray-500'>India</p>
+          <h1 className='font-medium text-lg'>{scholarship?.title}</h1>
+          <p className='text-sm text-gray-500'>japan</p>
         </div>
       </div>
       <div>
-        <h1 className='font-bold text-lg my-2'>Benefits</h1>
-        <p className='text-sm text-gray-600'> The scheme is applicable to such a single girl child who has taken admission in regular, full-time 1st year Masters Degree course in any recognized university or a post graduate college. This scholarship is available to PG-I year student only.!</p>
+        <h1 className='font-bold text-lg my-2'>{scholarship?.organizationName}</h1>
+        <p className='text-sm text-gray-600'> {scholarship?.description}</p>
       </div>
       <div className = 'flex items-center gap-2 mt-4'>
 
-        <Badge className = { ' text-blue-700 font-bold'} variant = "ghost"> Due date:25-04-2025</Badge>
-        <Badge className = { ' text-[#7209b7] font-bold'} variant = "ghost" > Amount</Badge >
+        <Badge className = { ' text-blue-700 font-bold'} variant = "ghost"> Due date {new Date(scholarship?.deadline).toISOString().split('T')[0]}</Badge>
+       
+        <Badge className = { ' text-[#7209b7] font-bold'} variant = "ghost" > {scholarship.amount}</Badge >
         </div>
         <div className='flex items-center gap-4 mt-4'>
-          <Button onClick={() => navigate('/description/${jobId}')} variant="outline">Details</Button>
+          <Button onClick={() => navigate(`/description/${scholarship?.id}`)} variant="outline">Details</Button>
           <Button className="bg-[#7209b7]">Save For Later</Button>
         </div>
     </div>
 
   )
 }
-export default Job;
+export default Scholarship;

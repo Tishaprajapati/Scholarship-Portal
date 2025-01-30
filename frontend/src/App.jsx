@@ -14,10 +14,10 @@ import AboutUs from './components/ui/aboutus'
 import Chatbot from './components/chatbot'
 
 
-import JobDescription from './components/JobDescription'
-import Jobs from './components/Jobs'
 import Browse from './components/Browse'
 import Profile from './components/Profile'
+import LatestScholarships from './components/LatestScholarships'
+import ScholarshipDescription from './components/ScholarshipDescription'
 const appRouter =createBrowserRouter([
   {
     path:'/',
@@ -36,12 +36,12 @@ const appRouter =createBrowserRouter([
   {
     path:'/description/:id',
      //eslint-disable-next-line react/jsx-no-undef
-    element:<JobDescription/>
+    element:<ScholarshipDescription/>
   },
   {
-    path:'/Jobs',
+    path:'/Scholarships',
     // eslint-disable-next-line react/jsx-no-undef
-    element:<Jobs/>
+    element:<LatestScholarships/>
 
   },
   {

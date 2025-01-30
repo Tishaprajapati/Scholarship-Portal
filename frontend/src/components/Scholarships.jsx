@@ -3,11 +3,15 @@
 import React from 'react';
 import Navbar from './shared/Navbar';
 import FilterCard from './FilterCard';
-import Job from './Job';
 
-const jobsArray = [1];
+import Scholarship from './Scholarship';
+import { useSelector } from 'react-redux';
 
-const Jobs = () => {
+//const scholarshipsArray = [1,2,3,4,5,6,7,8];
+
+const Scholarships = () => {
+  const { allScholarships=[] } = useSelector(store => store.scholarship);
+
   return (
     <div>
       <Navbar />
@@ -17,16 +21,15 @@ const Jobs = () => {
             <FilterCard />
           </div>
           {
-            jobsArray.length <= 0 ? <span>Scholarship not found</span> : (
+            allScholarships.length <= 0 ? <span>Scholarship not found</span> : (
               <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                 <div className='grid grid-cols-3 gap-4'>
                   {
-                    jobsArray.map((item, index) => (
-                      <div>
-                        <Job />
-
+                    allScholarships.map((scholarship) => 
+                    <div key={scholarship._id} >
+                         <Scholarship scholarship={scholarship}/>
                       </div>
-                    ))
+                    )
                   }
                 </div>
               </div>
@@ -37,4 +40,4 @@ const Jobs = () => {
     </div>
   )
 }
-export default Jobs;
+export default Scholarships;

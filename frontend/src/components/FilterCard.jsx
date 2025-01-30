@@ -82,7 +82,7 @@ const FilterCard = () => {
 
   return (
     <div className='w-full bg-white p-3 rounded-md'>
-      <h1 className='font-bold text-lg'>Filter Jobs</h1>
+      <h1 className='font-bold text-lg'>Filter Scholarships</h1>
       <hr className='mt-3' />
       <RadioGroup>
         {

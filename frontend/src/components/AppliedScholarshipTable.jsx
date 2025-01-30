@@ -5,7 +5,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Badge } from './ui/badge'
 //import { useSelector } from 'react-redux'
 
-const AppliedJobTable = () => {
+const AppliedScholarshipTable = () => {
   //  const {allAppliedJobs} = useSelector(store=>store.job);
     return (
         <div>
@@ -38,4 +38,4 @@ const AppliedJobTable = () => {
   )
 }
 
-export default AppliedJobTable
+export default AppliedScholarshipTable

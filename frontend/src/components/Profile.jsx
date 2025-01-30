@@ -1,21 +1,21 @@
-/* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './shared/Navbar'
-import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
+import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { Contact, Pen } from 'lucide-react';
-import { Mail } from 'lucide-react';
-import { Badge } from './ui/badge';
-import { Label } from '@radix-ui/react-label';
-
-import AppliedJobTable from './AppliedJobTable';
+import { Contact, Mail, Pen } from 'lucide-react'
+import { Badge } from './ui/badge'
+import { Label } from './ui/label'
+import AppliedJobTable from './AppliedScholarshipTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
-import { useState } from 'react';
+import { useSelector } from 'react-redux'
+import AppliedScholarshipTable from './AppliedScholarshipTable'
+
 
 const skills = ["90% in 10th","85% in 12th","Btech in IT"]
-const isResume = true;
-const Profile = () => {
 
+const Profile = () => {
+    
+const {user} = useSelector(store=>store.auth);
     const [open,setOpen] = useState(false);
     return (
         <div>
@@ -27,8 +27,8 @@ const Profile = () => {
                             <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt="profile" />
                         </Avatar>
                         <div>
-                            <h1 className='font-medium text-xl'>Riya Rathod</h1>
-                            <p>Student</p>
+                            <h1 className='font-medium text-xl'>{user?.fullname}</h1>
+                            <p>{user?.role}</p>
                         </div>
                     </div>
                     <Button onClick={() => setOpen(true)}className="text-right " variant="outline"><Pen /></Button>
@@ -36,11 +36,11 @@ const Profile = () => {
                 <div className='my-5'>
                     <div className='flex items-center gap-3 my-2'>
                         <Mail />
-                        <span>riya@gmail.com</span>
+                        <span>{user?.email}</span>
                     </div>
                     <div className='flex items-center gap-3 my-2'>
                         <Contact />
-                        <span>9939337532</span>
+                        <span>{user?.phoneNumber}</span>
                     </div>
                 </div>
                 <div className='my-5'>
@@ -51,18 +51,12 @@ const Profile = () => {
                         }
                     </div>
                 </div>
-                <div className='grid w-full max-w-sm items-center gap-1.5'>
-                    <Label className="text-md font-bold">Marksheet</Label>
-                    {
-                        isResume ? <a target='blank' href='https://youtube.com' className='text-blue-500 w-full hover:underline cursor-pointer'></a> : <span>NA</span>
-                    }
-
-                </div>
+              
 
             </div>
             <div className='max-w-4xl mx-auto bg-white roundeed-2xl'>
                 <h1 className='font-bold text-lg my-5'>Applied Scholarship</h1>
-                <AppliedJobTable />
+                <AppliedScholarshipTable />
             </div>
             <UpdateProfileDialog open={open} setOpen={setOpen}/>
         </div>
