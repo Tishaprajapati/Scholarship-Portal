@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const router = express.Router();
 
-const apiKey = 'SG_9ca6598d9c21e332';
+const apiKey = 'SG_dcd471baabbc7f97';
 const apiUrl = 'https://api.segmind.com/v1/llama-v3-8b-instruct';
 
 router.post('/chat', async (req, res) => {

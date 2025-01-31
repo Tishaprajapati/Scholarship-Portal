@@ -59,7 +59,6 @@ const scholarshipSchema = new mongoose.Schema(
         adminId: {
             type: String,
             required: true,
-            unique: true // Keep this unique if you need it
         }
     },
     {
