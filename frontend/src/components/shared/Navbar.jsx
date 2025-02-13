@@ -20,7 +20,6 @@ import { setUser } from "../redux/authSlice";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
-  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

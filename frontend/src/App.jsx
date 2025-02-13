@@ -17,11 +17,17 @@ import Profile from "./components/Profile";
 import LatestScholarships from "./components/Scholarship/LatestScholarships";
 import ScholarshipDescription from "./components/Scholarship/ScholarshipDescription";
 import Scholarships from "./components/Scholarship/Scholarships";
+import ApplicationPage from "./pages/ApplicationPage";
+import ApplicationList from "./components/Scholarship/ApplicationList";
 const appRouter = createBrowserRouter([
   {
     path: "/",
     // eslint-disable-next-line react/jsx-no-undef
     element: <Home />,
+  },
+  {
+    path: "/applications/:id",
+    element: <ApplicationList />,
   },
   {
     path: "/profile",
@@ -70,6 +76,15 @@ const appRouter = createBrowserRouter([
     path: "/Chatbot",
     //eslint-disable-next-line react/jsx-no-undef
     element: <Chatbot />,
+  },
+  {
+    path: "/apply/:id",
+    //eslint-disable-next-line react/jsx-no-undef
+    element: <ApplicationPage />,
+  },
+  {
+    path: "*",
+    element: <div>404 Not Found</div>,
   },
 ]);
 

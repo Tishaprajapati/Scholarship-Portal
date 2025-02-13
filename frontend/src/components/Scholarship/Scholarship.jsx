@@ -5,10 +5,13 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Badge } from "../ui/badge";
 import { useNavigate } from "react-router-dom";
+import { use } from "react";
+import { useSelector } from "react-redux";
 
 const Scholarship = ({ scholarship }) => {
   const navigate = useNavigate();
-  const scholarshipId = "jhsgdywfdchdjcgy";
+  const user = useSelector((store) => store.auth.user);
+  console.log(user);
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
     const currentTime = new Date();
@@ -64,7 +67,12 @@ const Scholarship = ({ scholarship }) => {
         >
           Details
         </Button>
-        <Button className="bg-[#7209b7]">Save For Later</Button>
+        <Button
+          className="bg-[#7209b7]"
+          onClick={() => navigate(`/applications/${scholarship?._id}`)}
+        >
+          {user?.role === "admin" ? "See Applications" : "Save For Later"}
+        </Button>
       </div>
     </div>
   );

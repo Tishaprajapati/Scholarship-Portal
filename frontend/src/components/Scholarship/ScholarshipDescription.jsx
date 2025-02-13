@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useParams } from "react-router-dom";
+import { redirect, useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { SCHOLARSHIP_API_END_POINT } from "@/utiles/constant";
 import { useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import {
 } from "../ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
+import Navbar from "../shared/Navbar";
 
 const ScholarshipDescription = () => {
   const [scholarship, setScholarship] = useState(null);
@@ -24,6 +25,7 @@ const ScholarshipDescription = () => {
   const params = useParams();
   const scholarshipId = params.id;
   const { user } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchScholarship = async () => {
@@ -34,6 +36,7 @@ const ScholarshipDescription = () => {
           { withCredentials: true }
         );
         if (res.data.success) {
+          console.log(res.data);
           setScholarship(res.data.scholarship);
         }
       } catch (error) {
@@ -52,78 +55,88 @@ const ScholarshipDescription = () => {
   if (!scholarship) return <div>Scholarship not found</div>;
 
   return (
-    <div className="max-w-7xl mx-auto my-10 px-4">
-      <Button className="mb-4 " variant="ghost">
-        &larr;
-      </Button>
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-2xl font-bold">
-            {scholarship.title}
-          </CardTitle>
-          {user && user.role !== "admin" && (
-            <Button
-              className={`rounded-lg ${
-                isApplied
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-[#7209b7] hover:bg-[#5f32ad]"
-              }`}
-            >
-              {isApplied ? "Already Applied" : "Apply Now"}
-            </Button>
-          )}
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-2 mt-2 mb-4">
-            <Badge className="text-blue-700 font-bold" variant="secondary">
-              Deadline: {new Date(scholarship.deadline).toLocaleDateString()}
-            </Badge>
-            <Badge className="text-[#7209b7] font-bold" variant="secondary">
-              Amount: ₹{scholarship.amount}
-            </Badge>
-          </div>
-          <p className="text-gray-600 mb-6">{scholarship.description}</p>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[250px]">Criteria</TableHead>
-                <TableHead>Details</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Academic Score</TableCell>
-                <TableCell>{scholarship.eligibility?.academicScore}%</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Family Income</TableCell>
-                <TableCell>₹{scholarship.eligibility?.familyIncome}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Age Group</TableCell>
-                <TableCell>{scholarship.eligibility?.age} years</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Student Type</TableCell>
-                <TableCell>
-                  {scholarship.eligibility?.studentType.join(", ")}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-          <div className="mt-6">
-            <h3 className="font-bold text-lg mb-2">Documents Required:</h3>
-            <ul className="list-disc pl-5">
-              {scholarship.documentsRequired.map((doc, index) => (
-                <li key={index} className="text-gray-600">
-                  {doc}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <Navbar />
+      <div className="max-w-7xl mx-auto my-10 px-4">
+        <Link to="/Scholarship" className="text-[#7209b7] mb-4 block">
+          <Button className="mb-4 " variant="ghost">
+            &larr;
+          </Button>
+        </Link>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-2xl font-bold">
+              {scholarship.title}
+            </CardTitle>
+            {user && user.role !== "admin" && (
+              <Button
+                onClick={() => navigate(`/apply/${scholarshipId}`)}
+                className={`rounded-lg ${
+                  isApplied
+                    ? "bg-gray-600 cursor-not-allowed"
+                    : "bg-[#7209b7] hover:bg-[#5f32ad]"
+                }`}
+              >
+                {isApplied ? "Already Applied" : "Apply Now"}
+              </Button>
+            )}
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-2 mt-2 mb-4">
+              <Badge className="text-blue-700 font-bold" variant="secondary">
+                Deadline: {new Date(scholarship.deadline).toLocaleDateString()}
+              </Badge>
+              <Badge className="text-[#7209b7] font-bold" variant="secondary">
+                Amount: ₹{scholarship.amount}
+              </Badge>
+            </div>
+            <p className="text-gray-600 mb-6">{scholarship.description}</p>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[250px]">Criteria</TableHead>
+                  <TableHead>Details</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">Academic Score</TableCell>
+                  <TableCell>
+                    {scholarship.eligibility?.academicScore}%
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Family Income</TableCell>
+                  <TableCell>
+                    ₹{scholarship.eligibility?.familyIncome}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Age Group</TableCell>
+                  <TableCell>{scholarship.eligibility?.age} years</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Student Type</TableCell>
+                  <TableCell>
+                    {scholarship.eligibility?.studentType.join(", ")}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+            <div className="mt-6">
+              <h3 className="font-bold text-lg mb-2">Documents Required:</h3>
+              <ul className="list-disc pl-5">
+                {scholarship.documentsRequired.map((doc, index) => (
+                  <li key={index} className="text-gray-600">
+                    {doc}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 };
 
