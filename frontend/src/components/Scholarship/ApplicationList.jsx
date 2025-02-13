@@ -105,11 +105,11 @@ const ApplicationList = () => {
   };
 
   const ApplicationDialog = ({ application }) => (
-    <DialogContent className="max-w-3xl">
+    <DialogContent className="max-w-3xl h-fit">
       <DialogHeader>
         <DialogTitle>Application Details</DialogTitle>
       </DialogHeader>
-      <div className="grid gap-4 py-4">
+      <div className="grid gap-4 py-4 overflow-y-auto">
         <div className="grid grid-cols-2 gap-4">
           <div>
             <h3 className="font-semibold">Student Information</h3>
@@ -151,6 +151,23 @@ const ApplicationList = () => {
               <h4 className="font-medium">Mother</h4>
               <p>Name: {application.motherDetails?.name}</p>
               <p>Occupation: {application.motherDetails?.occupation}</p>
+            </div>
+          </div>
+          <div className="mt-3">
+            <h3 className="font-semibold mb-2">Documents</h3>
+            <div>
+              <ul>
+                {Object.keys(selectedApplication.documents).map((key) => (
+                  <li className="p-2 underline">
+                    <a
+                      href={selectedApplication.documents[key]}
+                      target="_blank"
+                    >
+                      {key}
+                    </a>
+                  </li>
+                ))}{" "}
+              </ul>
             </div>
           </div>
         </div>
@@ -210,7 +227,10 @@ const ApplicationList = () => {
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => setSelectedApplication(application)}
+                            onClick={() => {
+                              setSelectedApplication(application);
+                              console.log(Object.keys(application.documents));
+                            }}
                           >
                             <Edit className="h-4 w-4" />
                           </Button>
