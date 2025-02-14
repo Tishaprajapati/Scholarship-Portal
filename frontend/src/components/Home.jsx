@@ -129,6 +129,7 @@ const Home = () => {
       <div>
         <Navbar />
         <HeroSection />
+        <Chatbot/>
       </div>
     );
   }
@@ -194,7 +195,7 @@ const Home = () => {
             )}
           </CardContent>
         </Card>
-
+            <Chatbot/>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           {selectedApplication && (
             <ApplicationDialog application={selectedApplication} />
