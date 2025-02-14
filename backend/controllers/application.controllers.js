@@ -6,7 +6,6 @@ import getDataUri from "../utils/datauri.js";
 // Create a new application
 export const createApplication = async (req, res) => {
   try {
-    // Parse the stringified JSON data
     const studentName = req.body.studentName;
     const studentType = req.body.studentType;
     const schoolOrCollegeName = req.body.schoolOrCollegeName;
@@ -14,6 +13,7 @@ export const createApplication = async (req, res) => {
     const fatherDetails = JSON.parse(req.body.fatherDetails);
     const motherDetails = JSON.parse(req.body.motherDetails);
     const scholarshipId = req.body.scholarshipId;
+    const userId = req.id; // Get user ID from authenticated request
 
     if (
       !studentName ||
@@ -68,8 +68,9 @@ export const createApplication = async (req, res) => {
       documents[doc] = result.secure_url;
     }
 
-    // Create the application
+    // Create the application with user reference
     const application = await Application.create({
+      user: userId,
       studentName,
       studentType,
       schoolOrCollegeName,
