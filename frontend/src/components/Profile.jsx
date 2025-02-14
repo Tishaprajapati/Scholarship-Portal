@@ -59,10 +59,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-4xl mx-auto bg-white roundeed-2xl">
+      {/* <div className="max-w-4xl mx-auto bg-white roundeed-2xl">
         <h1 className="font-bold text-lg my-5">Applied Scholarship</h1>
         <AppliedScholarshipTable />
-      </div>
+      </div> */}
       <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );

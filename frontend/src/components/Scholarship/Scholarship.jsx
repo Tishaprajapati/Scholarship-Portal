@@ -54,17 +54,20 @@ const Scholarship = ({ scholarship }) => {
       </div>
       <div className="flex items-center gap-4 mt-4">
         <Button
+          className="bg-[#7209b7] text-white hover:border hover:border-[#7209b7]"
           onClick={() => navigate(`/description/${scholarship?._id}`)}
           variant="outline"
         >
           Details
         </Button>
-        <Button
-          className="bg-[#7209b7]"
-          onClick={() => navigate(`/applications/${scholarship?._id}`)}
-        >
-          {user?.role === "admin" ? "See Applications" : "Save For Later"}
-        </Button>
+        {user?.role === "admin" && (
+          <Button
+            className="bg-[#7209b7]"
+            onClick={() => navigate(`/applications/${scholarship?._id}`)}
+          >
+            Applications
+          </Button>
+        )}
       </div>
     </div>
   );

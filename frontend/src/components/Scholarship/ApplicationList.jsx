@@ -42,7 +42,6 @@ const ApplicationList = () => {
   const [loading, setLoading] = useState(true);
   const [scholarship, setScholarship] = useState(null);
   const [selectedApplication, setSelectedApplication] = useState(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -69,13 +68,14 @@ const ApplicationList = () => {
 
   const updateApplicationStatus = async (applicationId, newStatus) => {
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         `http://localhost:9000/api/application/${applicationId}/status`,
         { status: newStatus },
         { withCredentials: true }
       );
 
       if (response.data.success) {
+        console.log("response", response);
         toast.success("Status updated successfully");
         // Update local state
         setApplications(
@@ -83,7 +83,6 @@ const ApplicationList = () => {
             app._id === applicationId ? { ...app, status: newStatus } : app
           )
         );
-        setIsDialogOpen(false);
       }
     } catch (error) {
       console.error("Error updating status:", error);
@@ -104,76 +103,76 @@ const ApplicationList = () => {
     );
   };
 
-  const ApplicationDialog = ({ application }) => (
-    <DialogContent className="max-w-3xl h-fit">
-      <DialogHeader>
-        <DialogTitle>Application Details</DialogTitle>
-      </DialogHeader>
-      <div className="grid gap-4 py-4 overflow-y-auto">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <h3 className="font-semibold">Student Information</h3>
-            <p>Name: {application.studentName}</p>
-            <p>Type: {application.studentType}</p>
-            <p>School/College: {application.schoolOrCollegeName}</p>
-            <p>Year/Standard: {application.yearOrStandard}</p>
-          </div>
-          <div>
-            <h3 className="font-semibold">Current Status</h3>
-            <div className="flex items-center gap-4 mt-2">
-              <Select
-                defaultValue={application.status}
-                onValueChange={(value) =>
-                  updateApplicationStatus(application._id, value)
-                }
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Parent Details</h3>
+  const ApplicationDialog = ({ application }) => {
+    console.log(application);
+    return (
+      <DialogContent className="max-w-3xl h-fit">
+        <DialogHeader>
+          <DialogTitle>Application Details</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4 overflow-y-auto">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <h4 className="font-medium">Father</h4>
-              <p>Name: {application.fatherDetails?.name}</p>
-              <p>Occupation: {application.fatherDetails?.occupation}</p>
+              <h3 className="font-semibold">Student Information</h3>
+              <p>Name: {application.studentName}</p>
+              <p>Type: {application.studentType}</p>
+              <p>School/College: {application.schoolOrCollegeName}</p>
+              <p>Year/Standard: {application.yearOrStandard}</p>
             </div>
             <div>
-              <h4 className="font-medium">Mother</h4>
-              <p>Name: {application.motherDetails?.name}</p>
-              <p>Occupation: {application.motherDetails?.occupation}</p>
+              <h3 className="font-semibold">Current Status</h3>
+              <div className="flex items-center gap-4 mt-2">
+                <Select
+                  defaultValue={application.status}
+                  onValueChange={(value) =>
+                    updateApplicationStatus(application["_id"], value)
+                  }
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="approved">Approved</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
-          <div className="mt-3">
-            <h3 className="font-semibold mb-2">Documents</h3>
-            <div>
-              <ul>
-                {Object.keys(selectedApplication.documents).map((key) => (
-                  <li className="p-2 underline">
-                    <a
-                      href={selectedApplication.documents[key]}
-                      target="_blank"
-                    >
-                      {key}
-                    </a>
-                  </li>
-                ))}{" "}
-              </ul>
+          <div>
+            <h3 className="font-semibold mb-2">Parent Details</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-medium">Father</h4>
+                <p>Name: {application.fatherDetails?.fullName}</p>
+                <p>Occupation: {application.fatherDetails?.occupation}</p>
+              </div>
+              <div>
+                <h4 className="font-medium">Mother</h4>
+                <p>Name: {application.motherDetails?.fullName}</p>
+                <p>Occupation: {application.motherDetails?.occupation}</p>
+              </div>
+            </div>
+            <div className="mt-3">
+              <h3 className="font-semibold mb-2">Documents</h3>
+              <div>
+                <ul>
+                  {Object.keys(application.documents).map((key, index) => (
+                    <li className="p-2 underline" key={index}>
+                      <a href={application.documents[key]} target="_blank">
+                        {key}
+                      </a>
+                    </li>
+                  ))}{" "}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </DialogContent>
-  );
+      </DialogContent>
+    );
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -219,10 +218,7 @@ const ApplicationList = () => {
                     <TableCell>{application.schoolOrCollegeName}</TableCell>
                     <TableCell>{getStatusBadge(application.status)}</TableCell>
                     <TableCell>
-                      <Dialog
-                        open={isDialogOpen}
-                        onOpenChange={setIsDialogOpen}
-                      >
+                      <Dialog>
                         <DialogTrigger asChild>
                           <Button
                             variant="ghost"
@@ -235,11 +231,12 @@ const ApplicationList = () => {
                             <Edit className="h-4 w-4" />
                           </Button>
                         </DialogTrigger>
-                        {selectedApplication && (
-                          <ApplicationDialog
-                            application={selectedApplication}
-                          />
-                        )}
+                        {selectedApplication &&
+                          selectedApplication._id === application._id && (
+                            <ApplicationDialog
+                              application={selectedApplication}
+                            />
+                          )}
                       </Dialog>
                     </TableCell>
                   </TableRow>

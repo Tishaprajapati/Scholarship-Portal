@@ -127,6 +127,7 @@ const Home = () => {
   if (!user) {
     return (
       <div>
+        <Navbar />
         <HeroSection />
       </div>
     );
