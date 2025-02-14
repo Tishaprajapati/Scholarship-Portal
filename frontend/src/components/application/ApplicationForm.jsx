@@ -15,7 +15,8 @@ import ParentInfoForm from "./ParentInfoForm";
 import DocumentUploadForm from "./DocumentUploadForm";
 import ReviewForm from "./ReviewForm";
 
-const steps = [
+const steps = 
+[
   "Student Information",
   "Parent Information",
   "Document Upload",
@@ -48,7 +49,8 @@ export default function ApplicationForm() {
     if (!validateFormData()) {
       return;
     }
-    try {
+    try
+     {
       // Create FormData object to handle file uploads
       const formDataObj = new FormData();
 
