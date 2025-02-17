@@ -24,6 +24,11 @@ const applicationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    studentCaste: {
+      type: String,
+      enum: ["ST", "SC","OBC","OPEN"],
+      required: true,
+    },
     fatherDetails: {
       fullName: {
         type: String,

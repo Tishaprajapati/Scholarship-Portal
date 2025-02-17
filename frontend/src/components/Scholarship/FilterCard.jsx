@@ -14,18 +14,19 @@ const filterData = [
   {
     filterType: "amount",
     array: [
-      "Rs. 0 - Rs. 25000",
+      
       "Rs. 25000 - Rs. 50000",
       "Rs. 50000 - Rs. 100000",
-      "Above 100000",
+      "Rs. 100000 - Rs. 300000",
+      "Above 300000",
     ],
   },
   {
-    filterType: "age",
-    array: ["1-18", "19-25", "26-40", "40 and above"],
+    filterType: "standard/year",
+    array: ["atd 5-8", "std 9-12", "year 1-4"],
   },
   {
-    filterType: "cast",
+    filterType: "caste",
     array: ["ST", "SC", "OBC", "OPEN"],
   },
 ];

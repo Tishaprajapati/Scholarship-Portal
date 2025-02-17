@@ -42,6 +42,7 @@ export default function ReviewForm({ formData }) {
         studentType: formData.studentType,
         schoolOrCollegeName: formData.schoolOrCollegeName,
         yearOrStandard: formData.yearOrStandard,
+        studentCaste: formData.studentCaste,
       })}
       {renderSection("Father's Details", formData.fatherDetails)}
       {renderSection("Mother's Details", formData.motherDetails)}

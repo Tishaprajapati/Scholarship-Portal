@@ -59,7 +59,7 @@ export default function ApplicationForm() {
       formDataObj.append("studentType", formData.studentType);
       formDataObj.append("schoolOrCollegeName", formData.schoolOrCollegeName);
       formDataObj.append("yearOrStandard", formData.yearOrStandard);
-
+      formDataObj.append("stdentCaste",formData.studentCaste);
       // Add parent details
       formDataObj.append(
         "fatherDetails",
@@ -118,6 +118,7 @@ export default function ApplicationForm() {
       studentType: "Student Type",
       schoolOrCollegeName: "School/College Name",
       yearOrStandard: "Year/Standard",
+      sudentCaste: "Caste",
       fatherDetails: "Father Details",
       motherDetails: "Mother Details",
       documents: "Documents",

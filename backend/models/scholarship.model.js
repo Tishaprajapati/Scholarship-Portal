@@ -38,6 +38,17 @@ const scholarshipSchema = new mongoose.Schema(
                 type: Number,
                 required: true
             },
+            caste:{
+                type:String,
+                enum: ["ST", "SC","OBC","OPEN"], // Can be both or either
+                required: true,
+                validate: {
+                    validator: function (value) {
+                        return value.length > 0;
+                    },
+                    message: "Student caste must include at least one value."
+                }
+            },
             nationality: {
                 type: String,
                 required: true

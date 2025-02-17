@@ -134,7 +134,7 @@ export const getScholarshipById = async (req, res) => {
 export const checkEligibility = async (req, res) => {
   try {
     const scholarshipId = req.params.id;
-    const { studentType, academicScore, familyIncome, age, nationality } =
+    const { studentType, academicScore, familyIncome, age,caste, nationality } =
       req.body;
 
     // Find scholarship
@@ -155,6 +155,9 @@ export const checkEligibility = async (req, res) => {
       academicScore >= scholarship.eligibility.academicScore &&
       familyIncome <= scholarship.eligibility.familyIncome &&
       age <= scholarship.eligibility.age &&
+      scholarship.eligibility.studentCaste.some((type) =>
+        studentCaste.includes(type)
+      ) &&
       nationality === scholarship.eligibility.nationality;
 
     if (!isEligible) {

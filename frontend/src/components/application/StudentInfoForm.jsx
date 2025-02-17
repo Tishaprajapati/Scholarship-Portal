@@ -26,6 +26,7 @@ const studentInfoSchema = z.object({
     .string()
     .min(2, "School/College name must be at least 2 characters"),
   yearOrStandard: z.string().min(1, "Year/Standard is required"),
+  studentCaste: z.string().min(1, "caste is required"),
 });
 
 export default function StudentInfoForm({ formData, updateFormData }) {
@@ -98,6 +99,19 @@ export default function StudentInfoForm({ formData, updateFormData }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Year/Standard</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="studentCaste"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Student Caste</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

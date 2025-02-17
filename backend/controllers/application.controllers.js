@@ -10,6 +10,7 @@ export const createApplication = async (req, res) => {
     const studentType = req.body.studentType;
     const schoolOrCollegeName = req.body.schoolOrCollegeName;
     const yearOrStandard = req.body.yearOrStandard;
+    const studentCaste = req.body.studentCaste;
     const fatherDetails = JSON.parse(req.body.fatherDetails);
     const motherDetails = JSON.parse(req.body.motherDetails);
     const scholarshipId = req.body.scholarshipId;
@@ -19,6 +20,7 @@ export const createApplication = async (req, res) => {
       !studentName ||
       !studentType ||
       !schoolOrCollegeName ||
+      !studentCaste ||
       !yearOrStandard ||
       !fatherDetails ||
       !motherDetails ||
@@ -75,6 +77,7 @@ export const createApplication = async (req, res) => {
       studentType,
       schoolOrCollegeName,
       yearOrStandard,
+      studentCaste,
       fatherDetails,
       motherDetails,
       documents,

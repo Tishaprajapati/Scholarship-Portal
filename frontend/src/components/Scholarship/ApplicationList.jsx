@@ -118,6 +118,7 @@ const ApplicationList = () => {
               <p>Type: {application.studentType}</p>
               <p>School/College: {application.schoolOrCollegeName}</p>
               <p>Year/Standard: {application.yearOrStandard}</p>
+              <p>Caste : {application.studentCaste}</p>
             </div>
             <div>
               <h3 className="font-semibold">Current Status</h3>
@@ -199,6 +200,7 @@ const ApplicationList = () => {
                   <TableHead>Application Date</TableHead>
                   <TableHead>Student Type</TableHead>
                   <TableHead>School/College</TableHead>
+                  <TableHead>Student Caste</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -216,6 +218,7 @@ const ApplicationList = () => {
                       {application.studentType}
                     </TableCell>
                     <TableCell>{application.schoolOrCollegeName}</TableCell>
+                    <TableCell>{application.studentCaste}</TableCell>
                     <TableCell>{getStatusBadge(application.status)}</TableCell>
                     <TableCell>
                       <Dialog>
