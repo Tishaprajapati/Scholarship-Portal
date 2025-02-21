@@ -52,6 +52,10 @@ const Navbar = () => {
             <Link to="/">
               <li>Home</li>
             </Link>
+           
+            <li>
+              <Link to="/Scholarship">Scholarship</Link>
+            </li>
             <Link to="/aboutus">
               <li>about us</li>
             </Link>
@@ -59,9 +63,6 @@ const Navbar = () => {
               {" "}
               <li>contact us</li>
             </Link>
-            <li>
-              <Link to="/Scholarship">Scholarship</Link>
-            </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-2 ">

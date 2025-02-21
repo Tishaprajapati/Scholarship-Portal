@@ -14,7 +14,7 @@ import Chatbot from "./components/chatbot";
 
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
-import LatestScholarships from "./components/Scholarship/LatestScholarships";
+// import LatestScholarships from "./components/Scholarship/LatestScholarships";
 import ScholarshipDescription from "./components/Scholarship/ScholarshipDescription";
 import Scholarships from "./components/Scholarship/Scholarships";
 import ApplicationPage from "./pages/ApplicationPage";
