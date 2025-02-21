@@ -1,16 +1,18 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Bookmark } from "lucide-react";
+import { Bookmark, Edit } from "lucide-react";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Badge } from "../ui/badge";
 import { useNavigate } from "react-router-dom";
 import { use } from "react";
 import { useSelector } from "react-redux";
+import EditScholarshipDialog from "./EditScholarshipDialog";
 
 const Scholarship = ({ scholarship }) => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.auth.user);
+  console.log(scholarship);
   console.log(user);
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
@@ -18,6 +20,15 @@ const Scholarship = ({ scholarship }) => {
     const timeDifference = currentTime - createdAt;
     return Math.floor(timeDifference / (1000 * 24 * 60 * 60));
   };
+
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  const handleScholarshipUpdate = (updatedScholarship) => {
+    if (onUpdate) {
+      onUpdate(updatedScholarship);
+    }
+  };
+
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
       <div className="flex place-items-center justify-between">
@@ -61,12 +72,22 @@ const Scholarship = ({ scholarship }) => {
           Details
         </Button>
         {user?.role === "admin" && (
-          <Button
-            className="bg-[#7209b7]"
-            onClick={() => navigate(`/applications/${scholarship?._id}`)}
-          >
-            Applications
-          </Button>
+          <>
+            <Button
+              className="border border-[#7209b7] bg-transparent text-[#7209b7] hover:bg-[#7209b7] hover:text-white"
+              onClick={() => setEditDialogOpen(true)}
+              variant="outline"
+            >
+              <Edit className="w-4 h-4 mr-2" />
+              Edit
+            </Button>
+            <EditScholarshipDialog
+              scholarship={scholarship}
+              open={editDialogOpen}
+              setOpen={setEditDialogOpen}
+              onUpdate={handleScholarshipUpdate}
+            />
+          </>
         )}
       </div>
     </div>

@@ -16,7 +16,7 @@ const Scholarships = () => {
   const [filters, setFilters] = useState({
     amount: "",
     age: "",
-    cast: "",
+    caste: "",
   });
 
   const { user } = useSelector((store) => store.auth);
@@ -87,9 +87,9 @@ const Scholarships = () => {
       });
     }
 
-    if (newFilters.cast) {
+    if (newFilters.caste) {
       filtered = filtered.filter(
-        (scholarship) => scholarship.eligibility?.category === newFilters.cast
+        (scholarship) => scholarship.eligibility?.caste === newFilters.caste
       );
     }
 
@@ -100,9 +100,22 @@ const Scholarships = () => {
     setFilters({
       amount: "",
       age: "",
-      cast: "",
+      caste: "",
     });
     setFilteredScholarships(scholarships);
+  };
+
+  const handleScholarshipUpdate = (updatedScholarship) => {
+    setScholarships(
+      scholarships.map((s) =>
+        s._id === updatedScholarship._id ? updatedScholarship : s
+      )
+    );
+    setFilteredScholarships(
+      filteredScholarships.map((s) =>
+        s._id === updatedScholarship._id ? updatedScholarship : s
+      )
+    );
   };
 
   return (
@@ -130,6 +143,7 @@ const Scholarships = () => {
                   <Scholarship
                     key={scholarship._id}
                     scholarship={scholarship}
+                    onUpdate={handleScholarshipUpdate}
                   />
                 ))}
               </div>

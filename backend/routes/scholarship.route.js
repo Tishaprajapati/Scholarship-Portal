@@ -4,6 +4,7 @@ import {
   createScholarship,
   getAllScholarships,
   getScholarshipById,
+  updateScholarship,
 } from "../controllers/scholarship.controllers.js";
 import auth from "../middlewares/auth.js"; // Assuming 'protect' and 'isAdmin' middleware
 
@@ -13,4 +14,5 @@ router.post("/createScholarship", auth, createScholarship); // Create scholarshi
 router.get("/get", auth, getAllScholarships); // Get all scholarships
 router.get("/:id", getScholarshipById); // Get scholarship by ID
 router.get("/checkEligibility/:id", checkEligibility);
+router.put("/:id", auth, updateScholarship);
 export default router;

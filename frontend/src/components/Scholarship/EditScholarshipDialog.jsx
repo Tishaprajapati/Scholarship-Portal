@@ -3,38 +3,27 @@ import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { useSelector } from "react-redux";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import axios from "axios";
 import { SCHOLARSHIP_API_END_POINT } from "@/utiles/constant";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
 
-const AddScholarshipDialog = () => {
-  const { user } = useSelector((store) => store.auth);
-  const [open, setOpen] = useState(false);
+const EditScholarshipDialog = ({ scholarship, open, setOpen, onUpdate }) => {
   const [input, setInput] = useState({
-    title: "",
-    organizationName: "",
-    description: "",
+    title: scholarship?.title || "",
+    organizationName: scholarship?.organizationName || "",
+    description: scholarship?.description || "",
     eligibility: {
-      studentType: [],
-      academicScore: "",
-      familyIncome: "",
-      age: "",
-      nationality: "",
-      caste: "",
+      studentType: scholarship?.eligibility?.studentType || [],
+      academicScore: scholarship?.eligibility?.academicScore || "",
+      familyIncome: scholarship?.eligibility?.familyIncome || "",
+      age: scholarship?.eligibility?.age || "",
+      nationality: scholarship?.eligibility?.nationality || "",
+      caste: scholarship?.eligibility?.caste || "",
     },
-    amount: "",
-    deadline: "",
-    documentsRequired: [],
-    adminId: user?._id,
+    amount: scholarship?.amount || "",
+    deadline: scholarship?.deadline?.split("T")[0] || "",
+    documentsRequired: scholarship?.documentsRequired || [],
   });
 
   const handleChange = (e) => {
@@ -81,8 +70,8 @@ const AddScholarshipDialog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `${SCHOLARSHIP_API_END_POINT}/createScholarship`,
+      const res = await axios.put(
+        `${SCHOLARSHIP_API_END_POINT}/${scholarship._id}`,
         input,
         {
           headers: { "Content-Type": "application/json" },
@@ -93,44 +82,24 @@ const AddScholarshipDialog = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         setOpen(false);
-        setInput({
-          title: "",
-          organizationName: "",
-          description: "",
-          eligibility: {
-            studentType: [],
-            academicScore: "",
-            familyIncome: "",
-            age: "",
-            nationality: "",
-            caste: "",
-          },
-          amount: "",
-          deadline: "",
-          documentsRequired: [],
-          adminId: user?._id,
-        });
+        onUpdate(res.data.scholarship);
       }
     } catch (error) {
       console.error(error);
       toast.error(
-        error.response?.data?.message || "Failed to create scholarship"
+        error.response?.data?.message || "Failed to update scholarship"
       );
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="bg-[#5a30a4] hover:bg-[#4e2593]">
-          <Plus className="mr-2 h-4 w-4" /> Add Scholarship
-        </Button>
-      </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Create New Scholarship</DialogTitle>
+          <DialogTitle>Edit Scholarship</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Form fields similar to AddScholarshipDialog */}
           <div>
             <Label>Title</Label>
             <Input
@@ -195,38 +164,6 @@ const AddScholarshipDialog = () => {
           </div>
 
           <div>
-            <Label>Family Income (Annual)</Label>
-            <Input
-              type="number"
-              name="eligibility.familyIncome"
-              value={input.eligibility.familyIncome}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div>
-            <Label>Age Limit</Label>
-            <Input
-              type="number"
-              name="eligibility.age"
-              value={input.eligibility.age}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div>
-            <Label>Nationality</Label>
-            <Input
-              name="eligibility.nationality"
-              value={input.eligibility.nationality}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div>
             <Label>Caste Category</Label>
             <div className="flex gap-4">
               {["SC", "ST", "OBC", "OPEN"].map((caste) => (
@@ -270,7 +207,7 @@ const AddScholarshipDialog = () => {
             type="submit"
             className="w-full bg-[#5a30a4] hover:bg-[#4e2593]"
           >
-            Create Scholarship
+            Update Scholarship
           </Button>
         </form>
       </DialogContent>
@@ -278,4 +215,4 @@ const AddScholarshipDialog = () => {
   );
 };
 
-export default AddScholarshipDialog;
+export default EditScholarshipDialog;

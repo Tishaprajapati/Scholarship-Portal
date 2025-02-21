@@ -4,22 +4,22 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
-    const { fullname, email, phoneNumber, password, role, dob, gender } =
-      req.body;
-    if (
-      !fullname ||
-      !email ||
-      !phoneNumber ||
-      !password ||
-      !role ||
-      !dob ||
-      !gender
-    ) {
+    const { fullname, email, phoneNumber, password, dob, gender } = req.body;
+    if (!fullname || !email || !phoneNumber || !password || !dob || !gender) {
       return res.status(400).json({
-        message: "Something is missing",
+        message: "All fields are required",
         success: false,
       });
     }
+
+    // Prevent registration with admin email
+    if (email === process.env.ADMIN_EMAIL) {
+      return res.status(400).json({
+        message: "This email is reserved",
+        success: false,
+      });
+    }
+
     const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|ac\.in)$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -68,7 +68,6 @@ export const register = async (req, res) => {
       email,
       phoneNumber,
       password: hashedPassword,
-      role,
       dob,
       gender,
     });
@@ -84,14 +83,45 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
-    if (!email || !password || !role) {
+    const { email, password } = req.body;
+    if (!email || !password) {
       return res.status(400).json({
-        message: "Something is missing",
+        message: "Email and password are required",
         success: false,
       });
     }
 
+    // Check if trying to login as admin
+    if (email === process.env.ADMIN_EMAIL) {
+      if (password === process.env.ADMIN_PASSWORD) {
+        const tokenData = {
+          isAdmin: true,
+        };
+        const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
+          expiresIn: "1d",
+        });
+
+        return res
+          .status(200)
+          .cookie("token", token, {
+            maxAge: 1 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+            sameSite: "strict",
+          })
+          .json({
+            message: "Welcome Admin",
+            isAdmin: true,
+            success: true,
+          });
+      } else {
+        return res.status(401).json({
+          message: "Invalid admin credentials",
+          success: false,
+        });
+      }
+    }
+
+    // Regular user login
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -108,15 +138,9 @@ export const login = async (req, res) => {
       });
     }
 
-    if (role !== user.role) {
-      return res.status(400).json({
-        message: "Account doesn't exist with current role.",
-        success: false,
-      });
-    }
-
     const tokenData = {
       userId: user._id,
+      isAdmin: false,
     };
     const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: "1d",
@@ -132,10 +156,15 @@ export const login = async (req, res) => {
       .json({
         message: `Welcome back ${user.fullname}`,
         user,
+        isAdmin: false,
         success: true,
       });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+    });
   }
 };
 

@@ -18,7 +18,7 @@ const HeroSection = () => {
               <span className="text-[#6A38C2]">Scholarship Goals</span>
             </h1>
             <p className="mx-auto max-w-2xl text-xl text-gray-600">
-              Welcome to Scholarship, your gateway to numerous opportunities.
+              Welcome to AspireScholar, your gateway to numerous opportunities.
               Browse through a wide range of scholarships, tailored to your
               academic goals, eligibility, and location.
             </p>

@@ -20,7 +20,6 @@ const Login = () => {
   const [input, setInput] = useState({
     email: "",
     password: "",
-    role: "",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,9 +38,13 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        console.log("User data before dispatch:", res.data.user); 
-        dispatch(setUser(res.data.user));
-        console.log("Redux state after dispatch:", store.getState()); 
+        if (res.data.isAdmin) {
+          // Handle admin login
+          dispatch(setUser({ ...res.data.user, role: "admin" }));
+        } else {
+          // Handle regular user login
+          dispatch(setUser(res.data.user));
+        }
         navigate("/");
         toast.success(res.data.message);
       }
@@ -82,37 +85,10 @@ const Login = () => {
               placeholder="Enter Password"
             />
           </div>
-          <div className="flex items-center justify-between">
-            <RadioGroup className="flex items-center gap-4 my-5">
-              <div className="flex items-center space-x-2">
-                <Input
-                  type="radio"
-                  name="role"
-                  checked={input.role === "student"}
-                  onChange={changeEventHandler}
-                  value="student"
-                  className="cursor-pointer"
-                />
 
-                <Label htmlFor="r1">Student</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Input
-                  type="radio"
-                  name="role"
-                  checked={input.role === "admin"}
-                  onChange={changeEventHandler}
-                  value="admin"
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="r2">admin</Label>
-              </div>
-            </RadioGroup>
-          </div>
           <Button type="submit" className="w-full my-4">
             Login
           </Button>
-          {/* {loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Signup</Button> */}
 
           <span className="text-sm">
             Don't have an account?{" "}

@@ -41,10 +41,11 @@ const Navbar = () => {
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-6xl h-20 px-4">
-        <div>
-          <h1 className="text-2xl font-bold">
-            Scholarship<span className="text-[#F83002]">Portal</span>
-          </h1>
+        <div className="flex flex-row items-center gap-2">
+          <img src="/logo.png" className="h-20 w-20 " />
+          <div className="font-bold text-2xl">
+            Aspire<span className="text-red-600">Scholar</span>
+          </div>
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">

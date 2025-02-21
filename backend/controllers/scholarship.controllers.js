@@ -1,4 +1,5 @@
 import { Scholarship } from "../models/scholarship.model.js";
+import jwt from "jsonwebtoken";
 
 // Create a new scholarship
 export const createScholarship = async (req, res) => {
@@ -11,7 +12,6 @@ export const createScholarship = async (req, res) => {
       amount,
       deadline,
       documentsRequired,
-      adminId, // Add this
     } = req.body;
 
     if (
@@ -20,8 +20,7 @@ export const createScholarship = async (req, res) => {
       !description ||
       !eligibility ||
       !amount ||
-      !deadline ||
-      !adminId
+      !deadline
     ) {
       return res.status(400).json({
         message: "All fields are required",
@@ -37,7 +36,6 @@ export const createScholarship = async (req, res) => {
       amount,
       deadline,
       documentsRequired,
-      adminId, // Include this
     });
 
     return res.status(201).json({
@@ -57,9 +55,24 @@ export const createScholarship = async (req, res) => {
 // Get all scholarships
 export const getAllScholarships = async (req, res) => {
   try {
-    const scholarships = await Scholarship.find({});
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const isAdmin = decoded.isAdmin;
 
-    if (!scholarships) {
+    let scholarships;
+
+    if (isAdmin) {
+      // Admin sees all scholarships
+      scholarships = await Scholarship.find({});
+    } else {
+      // Non-admin users only see scholarships with future deadlines
+      const currentDate = new Date();
+      scholarships = await Scholarship.find({
+        deadline: { $gt: currentDate },
+      });
+    }
+
+    if (!scholarships || scholarships.length === 0) {
       return res.status(404).json({
         message: "No scholarships found.",
         success: false,
@@ -134,8 +147,14 @@ export const getScholarshipById = async (req, res) => {
 export const checkEligibility = async (req, res) => {
   try {
     const scholarshipId = req.params.id;
-    const { studentType, academicScore, familyIncome, age,caste, nationality } =
-      req.body;
+    const {
+      studentType,
+      academicScore,
+      familyIncome,
+      age,
+      caste,
+      nationality,
+    } = req.body;
 
     // Find scholarship
     const scholarship = await Scholarship.findById(scholarshipId);
@@ -175,6 +194,72 @@ export const checkEligibility = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       message: "Server error.",
+      success: false,
+    });
+  }
+};
+
+export const updateScholarship = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+    if (!decoded.isAdmin) {
+      return res.status(403).json({
+        message: "Only admins can update scholarships",
+        success: false,
+      });
+    }
+
+    const scholarshipId = req.params.id;
+    const updateData = req.body;
+
+    // Find and update the scholarship
+    const scholarship = await Scholarship.findById(scholarshipId);
+
+    if (!scholarship) {
+      return res.status(404).json({
+        message: "Scholarship not found",
+        success: false,
+      });
+    }
+
+    // Check if this admin owns this scholarship
+    if (scholarship.adminId !== decoded.adminId) {
+      return res.status(403).json({
+        message: "You can only update scholarships you created",
+        success: false,
+      });
+    }
+
+    // Update allowed fields
+    const allowedUpdates = [
+      "title",
+      "organizationName",
+      "description",
+      "eligibility",
+      "amount",
+      "deadline",
+      "documentsRequired",
+    ];
+
+    allowedUpdates.forEach((field) => {
+      if (updateData[field] !== undefined) {
+        scholarship[field] = updateData[field];
+      }
+    });
+
+    await scholarship.save();
+
+    return res.status(200).json({
+      message: "Scholarship updated successfully",
+      scholarship,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Server error",
       success: false,
     });
   }

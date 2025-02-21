@@ -16,7 +16,6 @@ const Signup = () => {
     email: "",
     phoneNumber: "",
     password: "",
-    role: "",
     dob: "",
     gender: "",
   });
@@ -33,7 +32,6 @@ const Signup = () => {
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
-    formData.append("role", input.role);
     formData.append("dob", dob);
     formData.append("gender", input.gender);
 
@@ -117,31 +115,6 @@ const Signup = () => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <RadioGroup className="flex items-center gap-4 my-5">
-              <div className="flex items-center space-x-2">
-                <Input
-                  type="radio"
-                  name="role"
-                  value="student"
-                  checked={input.role === "student"}
-                  onChange={changeEventHandler}
-                  className="cursor-pointer"
-                />
-
-                <Label htmlFor="r1">student</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Input
-                  type="radio"
-                  name="role"
-                  checked={input.role === "admin"}
-                  onChange={changeEventHandler}
-                  value="admin"
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="r2">admin</Label>
-              </div>
-            </RadioGroup>
             <RadioGroup className="flex items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
                 <Input

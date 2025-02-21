@@ -123,7 +123,7 @@ const ScholarshipDescription = () => {
                 </TableRow>
               </TableBody>
             </Table>
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <h3 className="font-bold text-lg mb-2">Documents Required:</h3>
               <ul className="list-disc pl-5">
                 {scholarship.documentsRequired.map((doc, index) => (
@@ -132,7 +132,7 @@ const ScholarshipDescription = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </div>
