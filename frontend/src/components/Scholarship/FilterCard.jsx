@@ -22,9 +22,13 @@ const filterData = [
     ],
   },
   {
-    filterType: "standard/year",
-    array: ["atd 5-8", "std 9-12", "year 1-4"],
+    filterType: "For",
+    array: ["school", "collage"],
   },
+  // {
+  //   filterType: "standard/year",
+  //   array: ["std 5-8", "std 9-12", "year 1-4"],
+  // },
   {
     filterType: "caste",
     array: ["ST", "SC", "OBC", "OPEN"],
