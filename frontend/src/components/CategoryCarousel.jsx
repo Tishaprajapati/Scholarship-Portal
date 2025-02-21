@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 
-const category = [
-  "Indira Gandhi Scholarship",
-  "National Merit Scholarship Program",
-  "INSPIRE Scholarship",
-  "Pragati Scholarship Scheme",
-];
+// const category = [
+//   "Indira Gandhi Scholarship",
+//   "National Merit Scholarship Program",
+//   "INSPIRE Scholarship",
+//   "Pragati Scholarship Scheme",
+// ];
 
 const CategoryCarousel = () => {
   return (

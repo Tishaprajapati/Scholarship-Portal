@@ -43,11 +43,11 @@ const appRouter = createBrowserRouter([
     //eslint-disable-next-line react/jsx-no-undef
     element: <ScholarshipDescription />,
   },
-  {
-    path: "/Scholarships",
-    // eslint-disable-next-line react/jsx-no-undef
-    element: <LatestScholarships />,
-  },
+  // {
+  //   path: "/Scholarships",
+  //   // eslint-disable-next-line react/jsx-no-undef
+  //   element: <LatestScholarships />,
+  // },
   {
     path: "/Scholarship",
     // eslint-disable-next-line react/jsx-no-undef
