@@ -39,8 +39,8 @@ const scholarshipSchema = new mongoose.Schema(
         required: true,
       },
       caste: {
-        type: String,
-        enum: ["ST", "SC", "OBC", "OPEN"], // Can be both or either
+        type: [String],
+        enum: ["ST", "SC", "OBC", "OPEN"], 
         required: true,
         validate: {
           validator: function (value) {
@@ -52,7 +52,7 @@ const scholarshipSchema = new mongoose.Schema(
       nationality: {
         type: String,
         required: true,
-      },
+      }
     },
     amount: {
       type: Number,

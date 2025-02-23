@@ -121,6 +121,12 @@ const ScholarshipDescription = () => {
                     {scholarship.eligibility?.studentType.join(", ")}
                   </TableCell>
                 </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">Caste Type</TableCell>
+                  <TableCell>
+                    {scholarship.eligibility?.caste.join(", ")}
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
             <div className="mt-6">

@@ -29,7 +29,7 @@ const AddScholarshipDialog = () => {
       familyIncome: "",
       age: "",
       nationality: "",
-      caste: "",
+      caste: [],
     },
     amount: "",
     deadline: "",
@@ -70,10 +70,12 @@ const AddScholarshipDialog = () => {
 
   const handleCasteType = (type) => {
     setInput((prev) => ({
-      ...prev,
-      eligibility: {
-        ...prev.eligibility,
-        caste: type,
+        ...prev,
+        eligibility: {
+          ...prev.eligibility,
+          caste: prev.eligibility.caste.includes(type)
+            ? prev.eligibility.caste.filter((t) => t !== type)
+            : [...prev.eligibility.caste, type],
       },
     }));
   };
@@ -103,7 +105,7 @@ const AddScholarshipDialog = () => {
             familyIncome: "",
             age: "",
             nationality: "",
-            caste: "",
+            caste: [],
           },
           amount: "",
           deadline: "",
@@ -225,24 +227,42 @@ const AddScholarshipDialog = () => {
               required
             />
           </div>
-
-          <div>
-            <Label>Caste Category</Label>
+          <Label>Student Caste</Label>
             <div className="flex gap-4">
-              {["SC", "ST", "OBC", "OPEN"].map((caste) => (
-                <label key={caste} className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="caste"
-                    value={caste}
-                    checked={input.eligibility.caste === caste}
-                    onChange={() => handleCasteType(caste)}
-                  />
-                  {caste}
-                </label>
-              ))}
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={input.eligibility.caste.includes("ST")}
+                  onChange={() => handleCasteType("ST")}
+                />
+                ST
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={input.eligibility.caste.includes("SC")}
+                  onChange={() => handleCasteType("SC")}
+                />
+                SC
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={input.eligibility.caste.includes("OBC")}
+                  onChange={() => handleCasteType("OBC")}
+                />
+                OBC
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={input.eligibility.caste.includes("OPEN")}
+                  onChange={() => handleCasteType("OPEN")}
+                />
+                OPEN
+              </label>
             </div>
-          </div>
+          
 
           <div>
             <Label>Amount</Label>

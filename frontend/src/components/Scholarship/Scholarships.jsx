@@ -15,7 +15,7 @@ const Scholarships = () => {
   const [filteredScholarships, setFilteredScholarships] = useState([]);
   const [filters, setFilters] = useState({
     amount: "",
-    age: "",
+    studentType: "",
     caste: "",
   });
 
@@ -55,7 +55,7 @@ const Scholarships = () => {
       filtered = filtered.filter((scholarship) => {
         const amount = parseInt(scholarship.amount);
         switch (newFilters.amount) {
-          case "Rs. 0 - Rs. 25000":
+          case "Rs. 10000 - Rs. 25000":
             return amount <= 25000;
           case "Rs. 25000 - Rs. 50000":
             return amount > 25000 && amount <= 50000;
@@ -69,22 +69,12 @@ const Scholarships = () => {
       });
     }
 
-    if (newFilters.age) {
-      filtered = filtered.filter((scholarship) => {
-        const age = parseInt(scholarship.eligibility?.age);
-        switch (newFilters.age) {
-          case "1-18":
-            return age <= 18;
-          case "19-25":
-            return age > 18 && age <= 25;
-          case "26-40":
-            return age > 25 && age <= 40;
-          case "40 and above":
-            return age > 40;
-          default:
-            return true;
-        }
-      });
+    if (newFilters.studentType?.length > 0) {
+      filtered = filtered.filter((scholarship) =>
+        scholarship.eligibility?.studentType.some((type) =>
+          newFilters.studentType.includes(type)
+        )
+      );
     }
 
     if (newFilters.caste) {
@@ -99,7 +89,7 @@ const Scholarships = () => {
   const clearFilters = () => {
     setFilters({
       amount: "",
-      age: "",
+      studentType: "",
       caste: "",
     });
     setFilteredScholarships(scholarships);

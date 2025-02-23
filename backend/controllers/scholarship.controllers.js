@@ -174,9 +174,7 @@ export const checkEligibility = async (req, res) => {
       academicScore >= scholarship.eligibility.academicScore &&
       familyIncome <= scholarship.eligibility.familyIncome &&
       age <= scholarship.eligibility.age &&
-      scholarship.eligibility.studentCaste.some((type) =>
-        studentCaste.includes(type)
-      ) &&
+      ["ST", "SC", "OBC", "OPEN"].includes(caste) &&
       nationality === scholarship.eligibility.nationality;
 
     if (!isEligible) {

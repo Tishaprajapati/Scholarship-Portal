@@ -15,22 +15,19 @@ const filterData = [
     filterType: "amount",
     array: [
       
+      "Rs. 10000 - Rs. 25000",
       "Rs. 25000 - Rs. 50000",
       "Rs. 50000 - Rs. 100000",
-      "Rs. 100000 - Rs. 300000",
-      "Above 300000",
+      "Above 100000",
     ],
   },
   {
     filterType: "For",
-    array: ["school", "collage"],
+    array: ["school", "college"],
   },
-  // {
-  //   filterType: "standard/year",
-  //   array: ["std 5-8", "std 9-12", "year 1-4"],
-  // },
+  
   {
-    filterType: "caste",
+    filterType: "Caste",
     array: ["ST", "SC", "OBC", "OPEN"],
   },
 ];
