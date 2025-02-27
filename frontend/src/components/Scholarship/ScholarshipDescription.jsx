@@ -64,23 +64,32 @@ const ScholarshipDescription = () => {
           </Button>
         </Link>
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-2xl font-bold">
-              {scholarship.title}
-            </CardTitle>
-            {user && user.role !== "admin" && (
-              <Button
-                onClick={() => navigate(`/apply/${scholarshipId}`)}
-                className={`rounded-lg ${
-                  isApplied
-                    ? "bg-gray-600 cursor-not-allowed"
-                    : "bg-[#7209b7] hover:bg-[#5f32ad]"
-                }`}
-              >
-                {isApplied ? "Already Applied" : "Apply Now"}
-              </Button>
-            )}
-          </CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+  <CardTitle className="text-2xl font-bold">{scholarship.title}</CardTitle>
+
+  {user && user.role !== "admin" && (
+    <>
+      {/* ✅ Check if the user is already approved for a scholarship */}
+      {user.hasApprovedScholarship ? (
+        <p className="text-red-500 font-semibold">
+          ❌ You have already been approved for a scholarship. You cannot apply for another.
+        </p>
+      ) : (
+        <Button
+          onClick={() => navigate(`/apply/${scholarshipId}`)}
+          className={`rounded-lg ${
+            isApplied
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-[#7209b7] hover:bg-[#5f32ad]"
+          }`}
+        >
+          {isApplied ? "Already Applied" : "Apply Now"}
+        </Button>
+      )}
+    </>
+  )}
+</CardHeader>
+
           <CardContent>
             <div className="flex items-center gap-2 mt-2 mb-4">
               <Badge className="text-blue-700 font-bold" variant="secondary">

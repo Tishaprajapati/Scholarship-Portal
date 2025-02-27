@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
 const studentInfoSchema = z.object({
   studentName: z.string().min(2, "Name must be at least 2 characters"),
@@ -29,7 +30,9 @@ const studentInfoSchema = z.object({
   studentCaste: z.string().min(1, "caste is required"),
 });
 
-export default function StudentInfoForm({ formData, updateFormData }) {
+// export default function StudentInfoForm({ formData, updateFormData }) {
+
+export default function StudentInfoForm({ formData, updateFormData, setIsStudentInfoSaved }) {
   const form = useForm({
     resolver: zodResolver(studentInfoSchema),
     defaultValues: formData,
@@ -37,13 +40,15 @@ export default function StudentInfoForm({ formData, updateFormData }) {
 
   const onSubmit = (data) => {
     console.log("student infol", data);
+    alert("Your information has been saved successfully");
     updateFormData(data);
+    setIsStudentInfoSaved(true);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <Button type="submit" className="">
+      <Button type="submit" className="">
           Save
         </Button>
         <FormField
@@ -119,6 +124,8 @@ export default function StudentInfoForm({ formData, updateFormData }) {
             </FormItem>
           )}
         />
+
+
       </form>
     </Form>
   );

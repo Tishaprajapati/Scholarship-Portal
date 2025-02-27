@@ -22,7 +22,7 @@ const filterData = [
     ],
   },
   {
-    filterType: "For",
+    filterType: "StudentType",
     array: ["school", "college"],
   },
   
@@ -49,7 +49,7 @@ const FilterCard = ({ filters, onFilter, onClear }) => {
       {filterData.map((data, index) => (
         <div key={index} className="my-4">
           <h1 className="font-medium mb-2">{data.filterType.toUpperCase()}</h1>
-          <RadioGroup
+          {/* <RadioGroup
             value={filters[data.filterType]}
             onValueChange={(value) => onFilter(data.filterType, value)}
           >
@@ -62,7 +62,22 @@ const FilterCard = ({ filters, onFilter, onClear }) => {
                 <Label htmlFor={`${data.filterType}-${subIndex}`}>{item}</Label>
               </div>
             ))}
-          </RadioGroup>
+          </RadioGroup> */}
+          <RadioGroup
+          value={filters[data.filterType] || ""} // Ensure reset works
+          onValueChange={(value) => onFilter(data.filterType, value)}
+          >
+            {data.array.map((item, subIndex) => (
+            <div className="flex items-center space-x-2 my-2" key={subIndex}>
+            <RadioGroupItem
+              value={item}
+              id={`${data.filterType}-${subIndex}`}
+            />
+          <Label htmlFor={`${data.filterType}-${subIndex}`}>{item}</Label>
+        </div>
+      ))}
+    </RadioGroup>
+
         </div>
       ))}
     </div>

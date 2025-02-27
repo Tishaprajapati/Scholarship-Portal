@@ -69,17 +69,18 @@ const Scholarships = () => {
       });
     }
 
-    if (newFilters.studentType?.length > 0) {
-      filtered = filtered.filter((scholarship) =>
-        scholarship.eligibility?.studentType.some((type) =>
-          newFilters.studentType.includes(type)
-        )
-      );
+    if (newFilters.studentType) {
+      console.log("Filtering for Student Type:", newFilters.studentType); // Debugging log
+      filtered = filtered.filter((scholarship) => {
+        console.log("Scholarship Student Type:", scholarship.eligibility?.studentType); // Debugging log
+        return scholarship.eligibility?.studentType.includes(newFilters.studentType);
+      });
     }
-
+  
+   
     if (newFilters.caste) {
-      filtered = filtered.filter(
-        (scholarship) => scholarship.eligibility?.caste === newFilters.caste
+      filtered = filtered.filter((scholarship) =>
+        scholarship.eligibility?.caste.includes(newFilters.caste)
       );
     }
 

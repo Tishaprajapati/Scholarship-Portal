@@ -48,7 +48,7 @@ const Profile = () => {
             <span>{user?.phoneNumber}</span>
           </div>
         </div>
-        <div className="my-5">
+        {/* <div className="my-5">
           <h1>Qualifications</h1>
           <div className="flex items-center gap-1">
             {skills.length != 0 ? (
@@ -57,7 +57,7 @@ const Profile = () => {
               <span>NA</span>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       {/* <div className="max-w-4xl mx-auto bg-white roundeed-2xl">
         <h1 className="font-bold text-lg my-5">Applied Scholarship</h1>
