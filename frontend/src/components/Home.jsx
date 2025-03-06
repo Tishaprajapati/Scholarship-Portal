@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./shared/Navbar";
 import HeroSection from "./HeroSection";
-import Chatbot from "./chatbot";
+import Chatbot from "./Chatbot";
 import CategoryCarousel from "./CategoryCarousel";
 import LatestScholarships from "./Scholarship/LatestScholarships";
 import Footer from "./shared/Footer";
