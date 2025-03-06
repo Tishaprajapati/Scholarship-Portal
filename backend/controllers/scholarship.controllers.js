@@ -71,6 +71,7 @@ export const getAllScholarships = async (req, res) => {
         deadline: { $gt: currentDate },
       });
     }
+    console.log(scholarships);
 
     if (!scholarships || scholarships.length === 0) {
       return res.status(404).json({

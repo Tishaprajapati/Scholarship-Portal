@@ -30,7 +30,7 @@
 //   }),
 // });
 
-// export default function ParentInfoForm({ formData, updateFormData, setIsParentInfoSaved }) 
+// export default function ParentInfoForm({ formData, updateFormData, setIsParentInfoSaved })
 // {
 //   const form = useForm({
 //     resolver: zodResolver(parentInfoSchema),
@@ -152,16 +152,20 @@ const parentInfoSchema = z.object({
   }),
 });
 
-export default function ParentInfoForm({ formData, updateFormData }) {
+export default function ParentInfoForm({
+  formData,
+  updateFormData,
+  setIsParentInfoSaved,
+}) {
   const form = useForm({
     resolver: zodResolver(parentInfoSchema),
     defaultValues: formData,
   });
 
   const onSubmit = (data) => {
-  
     alert("Your Information has been saved successfully");
     updateFormData(data);
+    setIsParentInfoSaved(true);
   };
 
   return (

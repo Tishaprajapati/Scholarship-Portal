@@ -6,12 +6,9 @@ import { RouterProvider } from "react-router";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Home from "./components/Home";
-
 import ContactUs from "./components/ui/contactus";
 import AboutUs from "./components/ui/aboutus";
-
-import Chatbot from "./components/chatbot";
-
+import Chatbot from "./components/Chatbot";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
 // import LatestScholarships from "./components/Scholarship/LatestScholarships";
