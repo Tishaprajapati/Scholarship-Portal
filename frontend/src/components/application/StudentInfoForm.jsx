@@ -19,6 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import Navbar from "../shared/Navbar";
 
 const studentInfoSchema = z.object({
   studentName: z.string().min(2, "Name must be at least 2 characters"),
@@ -46,6 +47,8 @@ export default function StudentInfoForm({ formData, updateFormData, setIsStudent
   };
 
   return (
+    
+    
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
       <Button type="submit" className="">
@@ -128,5 +131,6 @@ export default function StudentInfoForm({ formData, updateFormData, setIsStudent
 
       </form>
     </Form>
+    
   );
 }

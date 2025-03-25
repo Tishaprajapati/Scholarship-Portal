@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ContactUs = () => {
   return (
@@ -7,10 +8,12 @@ const ContactUs = () => {
       {/* Header */}
       <header className="bg-white px-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
-         
-          <div>
-                    <h1 className='text-2xl font-bold'>scholarship<span className='text-[#F83002]'>Portal</span></h1>
-                </div>
+        <div className="flex flex-row items-center gap-2">
+         <Link to="/" ><img src="/logo.png" className="h-20 w-20 " /></Link>
+          <div className="font-bold text-2xl">
+            Aspire<span className="text-red-600">Scholar</span>
+          </div>
+        </div>
         </div>
 
         <nav className="flex gap-6">

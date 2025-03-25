@@ -23,8 +23,9 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../shared/Navbar";
 
 const steps = [
   "Student Information",
@@ -39,6 +40,7 @@ export default function ApplicationForm() {
   const [isDocumentsSaved, setIsDocumentsSaved] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [attemptedStep, setAttemptedStep] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState(() => {
     if (typeof window !== "undefined") {
@@ -114,6 +116,7 @@ export default function ApplicationForm() {
     if (!validateFormData()) {
       return;
     }
+        setIsSubmitting(true);
     try {
       // Create FormData object to handle file uploads
       const formDataObj = new FormData();
@@ -169,6 +172,9 @@ export default function ApplicationForm() {
       console.error("Error submitting application:", error);
       alert("An error occurred while submitting the application.");
     }
+finally {
+  setIsSubmitting(false);
+}
   };
 
   const updateFormData = (newData) => {
@@ -269,7 +275,27 @@ export default function ApplicationForm() {
   }
 
   return (
+    <div className="font-sans">
+       <div className="bg-white">
+          <div className="flex items-center justify-between mx-auto max-w-9xl h-20 px-4">
+       <div className="flex flex-row items-center gap-2 absolute top-2 left-2"> 
+      <Link to="/">
+        <img src="/logo.png" className="h-16 w-16" /> 
+      </Link>
+      <div className="font-bold text-2xl">
+        Aspire<span className="text-red-600">Scholar</span>
+      </div>
+    </div>
+  </div>
+  </div>
+   
     <Card className="w-full max-w-4xl mx-auto">
+      {/* <div className="flex flex-row items-center gap-2">
+    <Link to="/" ><img src="/logo.png" className="h-20 w-20 " /></Link>
+     <div className="font-bold text-2xl">
+       Aspire<span className="text-red-600">Scholar</span>
+     </div>
+   </div> */}
       <CardHeader>
         <CardTitle>Scholarship Application</CardTitle>
       </CardHeader>
@@ -301,7 +327,9 @@ export default function ApplicationForm() {
         {currentStep < steps.length - 1 ? (
           <Button onClick={handleNext}>Next</Button>
         ) : (
-          <Button onClick={handleSubmit}>Submit Application</Button>
+          <Button onClick={handleSubmit} disabled={isSubmitting}>
+            {isSubmitting ? "Submitting... Please wait" : "Submit Application"}
+          </Button>
         )}
       </CardFooter>
 
@@ -327,5 +355,6 @@ export default function ApplicationForm() {
         </Dialog>
       )}
     </Card>
+    </div>
   );
 }

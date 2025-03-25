@@ -42,7 +42,7 @@ const Navbar = () => {
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-6xl h-20 px-4">
         <div className="flex flex-row items-center gap-2">
-          <img src="/logo.png" className="h-20 w-20 " />
+         <Link to="/" ><img src="/logo.png" className="h-20 w-20 " /></Link>
           <div className="font-bold text-2xl">
             Aspire<span className="text-red-600">Scholar</span>
           </div>
@@ -78,22 +78,28 @@ const Navbar = () => {
           ) : (
             <Popover>
               <PopoverTrigger asChild>
-                <Avatar className="cursor-pointer">
-                  <AvatarImage
-                    src="https://github.com/shadcn.png"
-                    alt="@shadcn"
-                  />
-                </Avatar>
+              
+            <Avatar className="h-10 w-10">
+              <AvatarImage className="cursor-pointer"
+                src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
+                alt="profile"
+              />
+            </Avatar>
+            
+            
+            
               </PopoverTrigger>
               <PopoverContent className="w-80 bg-white p-3 shadow-sm drop-shadow  shadow-black rounded-lg">
                 <div className="">
-                  <div className="flex gap-4 space-y-2">
+                <div className="flex items-center gap-4">
                     <Avatar className="cursor-pointer">
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                    </Avatar>
+              <AvatarImage
+                src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
+                alt="profile"
+              />
+            </Avatar>
+            
+                    
                     <div>
                       <h4 className="font-medium">{user?.fullname}</h4>
                       <p className="text-sm text-muted-foreground">

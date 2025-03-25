@@ -6,17 +6,19 @@ import { RouterProvider } from "react-router";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Home from "./components/Home";
+// import Manual from "./components/ui/manual";
 import ContactUs from "./components/ui/contactus";
 import AboutUs from "./components/ui/aboutus";
 import Chatbot from "./components/Chatbot";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
-// import LatestScholarships from "./components/Scholarship/LatestScholarships";
 import ScholarshipDescription from "./components/Scholarship/ScholarshipDescription";
 import Scholarships from "./components/Scholarship/Scholarships";
 import ApplicationPage from "./pages/ApplicationPage";
 import ApplicationList from "./components/Scholarship/ApplicationList";
 import ScholarshipSearch from "./components/ScholarshipSearch";
+import ScholarshipManual from "./components/ui/manual";
+import HeroSection from "./components/HeroSection";
 
 const appRouter = createBrowserRouter([
   {
@@ -38,15 +40,16 @@ const appRouter = createBrowserRouter([
     element: <AboutUs />,
   },
   {
+    path : "/manual",
+    element:<ScholarshipManual />,
+  }
+  ,
+  {
     path: "/description/:id",
     //eslint-disable-next-line react/jsx-no-undef
     element: <ScholarshipDescription />,
   },
-  // {
-  //   path: "/Scholarships",
-  //   // eslint-disable-next-line react/jsx-no-undef
-  //   element: <LatestScholarships />,
-  // },
+  
   {
     path: "/Scholarship",
     // eslint-disable-next-line react/jsx-no-undef
@@ -84,6 +87,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/scholarships/search",
     element: <ScholarshipSearch />,
+  },
+  {
+    path : "/herosection",
+    element:<HeroSection/>,
   },
   {
     path: "*",

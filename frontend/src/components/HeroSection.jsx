@@ -23,15 +23,15 @@ const HeroSection = () => {
               academic goals, eligibility, and location.
             </p>
             <div className="flex w-full max-w-2xl shadow-lg border border-gray-200 rounded-full items-center gap-4 mx-auto bg-white">
-              <Search className="h-5 w-5 ml-4 text-gray-400" />
+              {/* <Search className="h-5 w-5 ml-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Find your dream scholarship"
                 className="outline-none border-none w-full py-3 px-2"
-              />
-              <Button className="rounded-full bg-[#6A38C2] hover:bg-[#5b2fa8] px-6 py-2 m-1">
+              /> */}
+              {/* <Button className="rounded-full bg-[#6A38C2] hover:bg-[#5b2fa8] px-6 py-2 m-1">
                 Search
-              </Button>
+              </Button> */}
             </div>
             <div className="flex flex-wrap justify-center gap-4 mt-8">
               <Link to={"/login"}>
@@ -45,7 +45,9 @@ const HeroSection = () => {
                 className="rounded-full px-6 py-2 border-[#6A38C2] text-[#6A38C2] hover:bg-[#6A38C2] hover:text-white"
               >
                 <Award className="w-5 h-5 mr-2" />
-                How It Works
+                <Link to={"/manual"}>
+                 How It Works
+                 </Link>
               </Button>
             </div>
           </div>
