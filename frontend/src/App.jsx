@@ -16,6 +16,8 @@ import ScholarshipDescription from "./components/Scholarship/ScholarshipDescript
 import Scholarships from "./components/Scholarship/Scholarships";
 import ApplicationPage from "./pages/ApplicationPage";
 import ApplicationList from "./components/Scholarship/ApplicationList";
+import ScholarshipSearch from "./components/ScholarshipSearch";
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -78,6 +80,10 @@ const appRouter = createBrowserRouter([
     path: "/apply/:id",
     //eslint-disable-next-line react/jsx-no-undef
     element: <ApplicationPage />,
+  },
+  {
+    path: "/scholarships/search",
+    element: <ScholarshipSearch />,
   },
   {
     path: "*",

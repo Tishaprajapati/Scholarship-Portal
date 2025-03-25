@@ -16,6 +16,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 import Navbar from "../shared/Navbar";
+import { toast } from "sonner";
 
 const ScholarshipDescription = () => {
   const [scholarship, setScholarship] = useState(null);
@@ -26,6 +27,7 @@ const ScholarshipDescription = () => {
   const scholarshipId = params.id;
   const { user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
+  const [isCheckingApproval, setIsCheckingApproval] = useState(false);
 
   useEffect(() => {
     const fetchScholarship = async () => {
@@ -48,7 +50,44 @@ const ScholarshipDescription = () => {
       }
     };
     fetchScholarship();
+    console.log(scholarship);
   }, [scholarshipId]);
+
+  const checkApprovedScholarshipStatus = async () => {
+    try {
+      setIsCheckingApproval(true);
+      const response = await axios.get(
+        "http://localhost:9000/api/application/check-approved-status",
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        if (response.data.hasApprovedScholarship) {
+          toast.error(
+            `You already have an approved scholarship: ${response.data.scholarshipDetails.title}`
+          );
+          return true;
+        }
+        return false;
+      }
+    } catch (error) {
+      console.error(
+        "Error checking scholarship status:",
+        error.response?.data?.message || error.message
+      );
+      toast.error("Failed to check scholarship status");
+      return true; // Prevent application on error
+    } finally {
+      setIsCheckingApproval(false);
+    }
+  };
+
+  const handleApplyClick = async () => {
+    const hasApprovedScholarship = await checkApprovedScholarshipStatus();
+    if (!hasApprovedScholarship) {
+      navigate(`/apply/${scholarshipId}`);
+    }
+  };
 
   if (loading) return <LoadingSkeleton />;
   if (error) return <ErrorMessage message={error} />;
@@ -64,31 +103,29 @@ const ScholarshipDescription = () => {
           </Button>
         </Link>
         <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-  <CardTitle className="text-2xl font-bold">{scholarship.title}</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-2xl font-bold">
+              {scholarship.title}
+            </CardTitle>
 
-  {user && user.role !== "admin" && (
-    <>
-      {/* ✅ Check if the user is already approved for a scholarship */}
-      {user.hasApprovedScholarship ? (
-        <p className="text-red-500 font-semibold">
-          ❌ You have already been approved for a scholarship. You cannot apply for another.
-        </p>
-      ) : (
-        <Button
-          onClick={() => navigate(`/apply/${scholarshipId}`)}
-          className={`rounded-lg ${
-            isApplied
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-[#7209b7] hover:bg-[#5f32ad]"
-          }`}
-        >
-          {isApplied ? "Already Applied" : "Apply Now"}
-        </Button>
-      )}
-    </>
-  )}
-</CardHeader>
+            {user && user.role !== "admin" && (
+              <Button
+                onClick={handleApplyClick}
+                disabled={isCheckingApproval}
+                className={`rounded-lg ${
+                  isApplied
+                    ? "bg-gray-600 cursor-not-allowed"
+                    : "bg-[#7209b7] hover:bg-[#5f32ad]"
+                }`}
+              >
+                {isCheckingApproval
+                  ? "Checking eligibility..."
+                  : isApplied
+                  ? "Already Applied"
+                  : "Apply Now"}
+              </Button>
+            )}
+          </CardHeader>
 
           <CardContent>
             <div className="flex items-center gap-2 mt-2 mb-4">

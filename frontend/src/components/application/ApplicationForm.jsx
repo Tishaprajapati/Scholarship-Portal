@@ -22,6 +22,9 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const steps = [
   "Student Information",
@@ -44,10 +47,41 @@ export default function ApplicationForm() {
     }
     return {};
   });
+  const [isCheckingApproval, setIsCheckingApproval] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem("applicationFormData", JSON.stringify(formData));
   }, [formData]);
+
+  useEffect(() => {
+    const checkApprovalStatus = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:9000/api/application/check-approved-status",
+          { withCredentials: true }
+        );
+
+        if (response.data.success && response.data.hasApprovedScholarship) {
+          toast.error(
+            `You already have an approved scholarship: ${response.data.scholarshipDetails.title}`
+          );
+          navigate("/scholarships");
+        }
+      } catch (error) {
+        console.error(
+          "Error checking scholarship status:",
+          error.response?.data?.message || error.message
+        );
+        toast.error("Failed to check scholarship status");
+        navigate("/scholarships");
+      } finally {
+        setIsCheckingApproval(false);
+      }
+    };
+
+    checkApprovalStatus();
+  }, [navigate]);
 
   const handleNext = () => {
     const isCurrentStepSaved = () => {
@@ -224,6 +258,16 @@ export default function ApplicationForm() {
     }
   };
 
+  if (isCheckingApproval) {
+    return (
+      <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle>Checking eligibility...</CardTitle>
+        </CardHeader>
+      </Card>
+    );
+  }
+
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
@@ -267,8 +311,8 @@ export default function ApplicationForm() {
             <DialogHeader>
               <DialogTitle>Unsaved Changes</DialogTitle>
               <DialogDescription>
-                You haven't saved your changes in the current step. Would you
-                like to save before proceeding?
+                You haven&apos;t saved your changes in the current step. Would
+                you like to save before proceeding?
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex justify-between">

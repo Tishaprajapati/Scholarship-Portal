@@ -2,9 +2,12 @@ import express from "express";
 import multer from "multer";
 import {
   createApplication,
-  getApplicationsByScholarship,
+  // getAllApplications,
   getApplicationById,
   updateApplicationStatus,
+  // getApplicationsByUser,
+  getApplicationsByScholarship,
+  checkApprovedStatus,
   getAllApplicationsByUser,
 } from "../controllers/application.controllers.js";
 import auth from "../middlewares/auth.js"; // Assuming 'protect' middleware for authentication
@@ -24,10 +27,12 @@ const documentFields = [
   { name: "motherPanCard", maxCount: 1 },
 ];
 
+router.get("/check-approved-status", auth, checkApprovedStatus);
 router.post("/apply", auth, upload.fields(documentFields), createApplication); // Apply for scholarship
 router.get("/scholarship/:scholarshipId", auth, getApplicationsByScholarship); // Get all applications for a specific scholarship
 router.get("/:id", auth, getApplicationById); // Get all applications by a specific student
 router.put("/:id/status", auth, updateApplicationStatus);
 router.get("/", auth, getAllApplicationsByUser); // Get all applications by a specific student
+// router.get("/user/:userId", auth, getApplicationsByUser);
 
 export default router;

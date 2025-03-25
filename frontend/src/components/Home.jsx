@@ -28,6 +28,9 @@ import {
 import { Badge } from "./ui/badge";
 import axios from "axios";
 import { toast } from "sonner";
+import Scholarship from "./Scholarship/Scholarship";
+
+const SCHOLARSHIP_API_END_POINT = "http://localhost:9000/api/scholarship";
 
 const Home = () => {
   const { user } = useSelector((store) => store.auth);
@@ -35,6 +38,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [scholarships, setScholarships] = useState([]);
 
   useEffect(() => {
     if (user) {
@@ -124,12 +129,69 @@ const Home = () => {
     </DialogContent>
   );
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.get(`${SCHOLARSHIP_API_END_POINT}/get`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        const filtered = res.data.scholarships.filter(
+          (scholarship) =>
+            scholarship.title
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            scholarship.description
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
+        );
+        setScholarships(filtered);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (!user) {
     return (
       <div>
         <Navbar />
         <HeroSection />
-        <Chatbot/>
+        <Chatbot />
+      </div>
+    );
+  }
+
+  if (user.role === "admin") {
+    return (
+      <div>
+        <Navbar />
+        <div className="max-w-7xl mx-auto py-8 px-4">
+          <div className="mb-8">
+            <form onSubmit={handleSearch} className="flex gap-4">
+              <input
+                type="text"
+                placeholder="Search scholarships..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7209b7]"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-[#7209b7] text-white rounded-lg hover:bg-[#5f32ad]"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {scholarships.map((scholarship) => (
+              <Scholarship key={scholarship._id} scholarship={scholarship} />
+            ))}
+          </div>
+        </div>
+        <Chatbot />
       </div>
     );
   }
@@ -195,7 +257,7 @@ const Home = () => {
             )}
           </CardContent>
         </Card>
-            <Chatbot/>
+        <Chatbot />
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           {selectedApplication && (
             <ApplicationDialog application={selectedApplication} />

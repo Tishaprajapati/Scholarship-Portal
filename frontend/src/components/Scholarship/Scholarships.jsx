@@ -13,6 +13,7 @@ import { SCHOLARSHIP_API_END_POINT } from "@/utiles/constant";
 const Scholarships = () => {
   const [scholarships, setScholarships] = useState([]);
   const [filteredScholarships, setFilteredScholarships] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
     amount: "",
     studentType: "",
@@ -70,21 +71,69 @@ const Scholarships = () => {
     }
 
     if (newFilters.studentType) {
-      console.log("Filtering for Student Type:", newFilters.studentType); // Debugging log
+      filtered = filtered.filter((scholarship) =>
+        scholarship.eligibility?.studentType.includes(newFilters.studentType)
+      );
+    }
+
+    if (newFilters.caste) {
+      filtered = filtered.filter((scholarship) =>
+        scholarship.eligibility?.caste.includes(newFilters.caste)
+      );
+    }
+
+    setFilteredScholarships(filtered);
+  };
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    let filtered = scholarships;
+
+    if (query) {
+      filtered = filtered.filter(
+        (scholarship) =>
+          scholarship.title.toLowerCase().includes(query) ||
+          scholarship.organizationName.toLowerCase().includes(query) ||
+          scholarship.description.toLowerCase().includes(query)
+      );
+    }
+
+    if (filters.amount) {
+      filtered = filtered.filter((scholarship) => {
+        const amount = parseInt(scholarship.amount);
+        switch (filters.amount) {
+          case "Rs. 10000 - Rs. 25000":
+            return amount <= 25000;
+          case "Rs. 25000 - Rs. 50000":
+            return amount > 25000 && amount <= 50000;
+          case "Rs. 50000 - Rs. 100000":
+            return amount > 50000 && amount <= 100000;
+          case "Above 100000":
+            return amount > 100000;
+          default:
+            return true;
+        }
+      });
+    }
+
+    if (filters.studentType) {
+      console.log("Filtering for Student Type:", filters.studentType); // Debugging log
       filtered = filtered.filter((scholarship) => {
         console.log(
           "Scholarship Student Type:",
           scholarship.eligibility?.studentType
         ); // Debugging log
         return scholarship.eligibility?.studentType.includes(
-          newFilters.studentType
+          filters.studentType
         );
       });
     }
 
-    if (newFilters.caste) {
+    if (filters.caste) {
       filtered = filtered.filter((scholarship) =>
-        scholarship.eligibility?.caste.includes(newFilters.caste)
+        scholarship.eligibility?.caste.includes(filters.caste)
       );
     }
 
@@ -97,6 +146,7 @@ const Scholarships = () => {
       studentType: "",
       caste: "",
     });
+    setSearchQuery("");
     setFilteredScholarships(scholarships);
   };
 
@@ -118,7 +168,16 @@ const Scholarships = () => {
       <Navbar />
       <div className="max-w-7xl mx-auto mt-5">
         <div className="flex justify-between items-center mb-5">
-          <h1 className="text-2xl font-bold">All Scholarships</h1>
+          <div className="flex items-center gap-4 flex-1">
+            <h1 className="text-2xl font-bold">All Scholarships</h1>
+            <input
+              type="text"
+              placeholder="Search scholarships..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           {user?.role === "admin" && <AddScholarshipDialog />}
         </div>
         <div className="flex gap-5">

@@ -14,7 +14,6 @@ const filterData = [
   {
     filterType: "amount",
     array: [
-      
       "Rs. 10000 - Rs. 25000",
       "Rs. 25000 - Rs. 50000",
       "Rs. 50000 - Rs. 100000",
@@ -22,12 +21,12 @@ const filterData = [
     ],
   },
   {
-    filterType: "StudentType",
+    filterType: "studentType",
     array: ["school", "college"],
   },
-  
+
   {
-    filterType: "Caste",
+    filterType: "caste",
     array: ["ST", "SC", "OBC", "OPEN"],
   },
 ];
@@ -64,20 +63,19 @@ const FilterCard = ({ filters, onFilter, onClear }) => {
             ))}
           </RadioGroup> */}
           <RadioGroup
-          value={filters[data.filterType] || ""} // Ensure reset works
-          onValueChange={(value) => onFilter(data.filterType, value)}
+            value={filters[data.filterType] || ""} // Ensure reset works
+            onValueChange={(value) => onFilter(data.filterType, value)}
           >
             {data.array.map((item, subIndex) => (
-            <div className="flex items-center space-x-2 my-2" key={subIndex}>
-            <RadioGroupItem
-              value={item}
-              id={`${data.filterType}-${subIndex}`}
-            />
-          <Label htmlFor={`${data.filterType}-${subIndex}`}>{item}</Label>
-        </div>
-      ))}
-    </RadioGroup>
-
+              <div className="flex items-center space-x-2 my-2" key={subIndex}>
+                <RadioGroupItem
+                  value={item}
+                  id={`${data.filterType}-${subIndex}`}
+                />
+                <Label htmlFor={`${data.filterType}-${subIndex}`}>{item}</Label>
+              </div>
+            ))}
+          </RadioGroup>
         </div>
       ))}
     </div>
