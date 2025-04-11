@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const router = express.Router();
 
-const apiKey = 'SG_cd1ccd781eebdcaf';
+const apiKey = 'SG_6972b61c78e47f2e';
 const apiUrl = 'https://api.segmind.com/v1/llama-v3-8b-instruct';
 
 router.post('/chat', async (req, res) => {
@@ -19,7 +19,7 @@ router.post('/chat', async (req, res) => {
         headers: { 'x-api-key': apiKey },
       }
     );
-    console.log('API Response:', response.data); // Log the full response for debugging
+    console.log('API Response:', response.data); 
 
     if (response.data.choices && response.data.choices.length > 0) {
       res.json({ message: response.data.choices[0].message.content });
@@ -33,3 +33,5 @@ router.post('/chat', async (req, res) => {
 });
 
 export default router;
+
+

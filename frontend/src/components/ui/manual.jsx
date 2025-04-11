@@ -26,7 +26,7 @@ export default function ScholarshipManual() {
           <p>• If you are a new user, click on “Register” and fill in your details.</p>
           <p>• If you already have an account, log in using your credentials.</p>
           <Separator className="my-4" />
-          
+         
           <h2 className="text-lg font-bold">Step 2: Fill Student Information</h2>
           <p>• Click on “Apply for Scholarship” and enter your personal details.</p>
           <p>• Ensure that all mandatory fields are filled correctly.</p>

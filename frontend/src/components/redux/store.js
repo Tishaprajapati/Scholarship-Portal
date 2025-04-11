@@ -31,12 +31,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        // FLUSH → Local storage માં changes લખવા માટે.
-// REHYDRATE → Stored data ને Redux store માં પાછું લાવવા માટે.
-// PAUSE → Persisted state updates થવા બંધ કરવા.
-// PERSIST → State ને persist (save) કરવા માટે.
-// PURGE → Local storage માંથી stored state ને કાઢી નાખવા.
-// REGISTER → Persisted reducers ને register કરવા.
+        
       },
     }),
   // Add this to ensure initial state is properly structured

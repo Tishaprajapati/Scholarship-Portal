@@ -49,7 +49,7 @@ const Chatbot = () => {
       {/* Show Button if Chatbot is Hidden */}
       {!showChatbot && (
         <button onClick={handleToggleChatbot} className="popup-button">
-          Chat with us
+          AI Chatbot
         </button>
       )}
 

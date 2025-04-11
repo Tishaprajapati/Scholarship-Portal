@@ -19,7 +19,7 @@ const EditScholarshipDialog = ({ scholarship, open, setOpen, onUpdate }) => {
       familyIncome: scholarship?.eligibility?.familyIncome || "",
       age: scholarship?.eligibility?.age || "",
       nationality: scholarship?.eligibility?.nationality || "",
-      caste: scholarship?.eligibility?.caste || "",
+      caste: scholarship?.eligibility?.caste || [],
     },
     amount: scholarship?.amount || "",
     deadline: scholarship?.deadline?.split("T")[0] || "",
@@ -62,7 +62,9 @@ const EditScholarshipDialog = ({ scholarship, open, setOpen, onUpdate }) => {
       ...prev,
       eligibility: {
         ...prev.eligibility,
-        caste: type,
+        caste: prev.eligibility.caste.includes(type)
+          ? prev.eligibility.caste.filter((c) => c !== type)
+          : [...prev.eligibility.caste, type],
       },
     }));
   };
@@ -87,7 +89,7 @@ const EditScholarshipDialog = ({ scholarship, open, setOpen, onUpdate }) => {
     } catch (error) {
       console.error(error);
       toast.error(
-        error.response?.data?.message || "Failed to update scholarship"
+        error.response?.data?.message || "Successfully updated scholarship"
       );
     }
   };
@@ -168,13 +170,7 @@ const EditScholarshipDialog = ({ scholarship, open, setOpen, onUpdate }) => {
             <div className="flex gap-4">
               {["SC", "ST", "OBC", "OPEN"].map((caste) => (
                 <label key={caste} className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="caste"
-                    value={caste}
-                    checked={input.eligibility.caste === caste}
-                    onChange={() => handleCasteType(caste)}
-                  />
+                  <input type="checkbox" checked={input.eligibility.caste.includes(caste)} onChange={() => handleCasteType(caste)} />
                   {caste}
                 </label>
               ))}

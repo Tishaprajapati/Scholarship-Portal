@@ -106,7 +106,7 @@ export default function StudentInfoForm({ formData, updateFormData, setIsStudent
           name="yearOrStandard"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Year/Standard</FormLabel>
+              <FormLabel>Year/Standard </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -119,7 +119,7 @@ export default function StudentInfoForm({ formData, updateFormData, setIsStudent
           name="studentCaste"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Student Caste</FormLabel>
+              <FormLabel>Student Caste (IN CAPITAL)</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
