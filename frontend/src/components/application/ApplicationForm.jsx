@@ -112,70 +112,72 @@ export default function ApplicationForm() {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const handleSubmit = async () => {
-    if (!validateFormData()) {
-      return;
+
+
+const handleSubmit = async () => {
+  if (!validateFormData()) {
+    return;
+  }
+  setIsSubmitting(true);
+  try {
+    // Create FormData object to handle file uploads
+    const formDataObj = new FormData();
+
+    // Add basic form fields
+    formDataObj.append("studentName", formData.studentName);
+    formDataObj.append("studentType", formData.studentType);
+    formDataObj.append("schoolOrCollegeName", formData.schoolOrCollegeName);
+    formDataObj.append("yearOrStandard", formData.yearOrStandard);
+    formDataObj.append("studentCaste", formData.studentCaste);
+
+    // Add parent details
+    formDataObj.append(
+      "fatherDetails",
+      JSON.stringify(formData.fatherDetails)
+    );
+    formDataObj.append(
+      "motherDetails",
+      JSON.stringify(formData.motherDetails)
+    );
+
+    // Get scholarshipId from URL
+    const scholarshipId = window.location.pathname.split("/apply/")[1];
+    formDataObj.append("scholarshipId", scholarshipId);
+
+    // Add documents
+    if (formData.documents) {
+      Object.entries(formData.documents).forEach(([key, file]) => {
+        formDataObj.append(key, file);
+      });
     }
-        setIsSubmitting(true);
-    try {
-      // Create FormData object to handle file uploads
-      const formDataObj = new FormData();
 
-      // Add basic form fields
-      formDataObj.append("studentName", formData.studentName);
-      formDataObj.append("studentType", formData.studentType);
-      formDataObj.append("schoolOrCollegeName", formData.schoolOrCollegeName);
-      formDataObj.append("yearOrStandard", formData.yearOrStandard);
-      formDataObj.append("studentCaste", formData.studentCaste);
-      // Add parent details
-      formDataObj.append(
-        "fatherDetails",
-        JSON.stringify(formData.fatherDetails)
-      );
-      formDataObj.append(
-        "motherDetails",
-        JSON.stringify(formData.motherDetails)
-      );
-
-      // Get scholarshipId from URL
-      const scholarshipId = window.location.pathname.split("/apply/")[1];
-      formDataObj.append("scholarshipId", scholarshipId);
-
-      // Add documents
-      if (formData.documents) {
-        Object.entries(formData.documents).forEach(([key, file]) => {
-          formDataObj.append(key, file);
-        });
+    // Sending the formData to the server for processing
+    const response = await fetch(
+      "http://localhost:9000/api/application/apply", // API to handle document submission
+      {
+        method: "POST",
+        body: formDataObj,
+        credentials: "include", // Important for auth
       }
-      console.log("formData", formData);
-      console.log("formDataObj", formDataObj);
+    );
 
-      const response = await fetch(
-        "http://localhost:9000/api/application/apply",
-        {
-          method: "POST",
-          body: formDataObj,
-          credentials: "include", // Important for auth
-        }
-      );
-
-      const data = await response.json();
-      if (data.success) {
-        alert("Application submitted successfully!");
-        setFormData({});
-        setCurrentStep(0);
-        localStorage.removeItem("applicationFormData");
-      } else {
-        alert("Error submitting application: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      alert("An error occurred while submitting the application.");
+    const data = await response.json();
+    if (data.success) {
+      alert("Application submitted successfully!");
+      setFormData({});
+      setCurrentStep(0);
+      localStorage.removeItem("applicationFormData");
+    } else {
+      alert("Error submitting application: " + data.message);
     }
-finally {
-  setIsSubmitting(false);
-}
-  };
+  } catch (error) {
+    console.error("Error submitting application:", error);
+    alert("An error occurred while submitting the application.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const updateFormData = (newData) => {
     console.log(newData);

@@ -158,15 +158,27 @@ const ApplicationList = () => {
             <div className="mt-3">
               <h3 className="font-semibold mb-2">Documents</h3>
               <div>
-                <ul>
-                  {Object.keys(application.documents).map((key, index) => (
-                    <li className="p-2 underline" key={index}>
-                      <a href={application.documents[key]} target="_blank">
-                        {key}
-                      </a>
-                    </li>
-                  ))}{" "}
-                </ul>
+              <ul>
+  {Object.entries(application.documents || {}).map(([key, filePath], index) => (
+    <li key={index} className="p-2 underline">
+      {filePath ? (
+        <a
+          href={`http://localhost:9000/uploads/${filePath}`} // adjust path if different
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
+          {key}
+        </a>
+      ) : (
+        <span className="text-gray-500">{key} (not uploaded)</span>
+      )}
+    </li>
+  ))}
+</ul>
+
+
+
               </div>
             </div>
           </div>
@@ -254,3 +266,5 @@ const ApplicationList = () => {
 };
 
 export default ApplicationList;
+
+

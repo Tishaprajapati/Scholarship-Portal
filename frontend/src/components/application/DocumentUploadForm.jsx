@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {
   Form,
   FormField,
@@ -12,7 +13,23 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "../ui/button";
+// import { Checkbox } from "@radix-ui/react-checkbox";
 
+// import {
+//   Form,
+//   FormField,
+//   FormItem,
+//   FormLabel,
+//   FormControl,
+//   FormMessage,
+// } from "@/components/ui/form";
+// import { Input } from "@/components/ui/input";
+// import { Checkbox } from "@/components/ui/checkbox"; // ✅ Import Checkbox
+// import { useForm } from "react-hook-form";
+// import { zodResolver } from "@hookform/resolvers/zod";
+// import * as z from "zod";
+// import { useState } from "react";
+// import { Button } from "../ui/button";
 
 const documentUploadSchema = z.object({
   documents: z.object({
@@ -56,7 +73,7 @@ export default function DocumentUploadForm({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <h2 className="text-lg font-semibold">
-          Upload all documents (PDF only)
+          Upload all documents 
         </h2>
         <Button type="submit" className="mt-4">
           Save Progress
@@ -79,7 +96,7 @@ export default function DocumentUploadForm({
                   <FormControl>
                     <Input
                       type="file"
-                      accept=".pdf"
+                  
                       onChange={(e) => field.onChange(e.target.files[0])}
                     />
                   </FormControl>
@@ -93,3 +110,9 @@ export default function DocumentUploadForm({
     </Form>
   );
 }
+
+
+
+
+
+
