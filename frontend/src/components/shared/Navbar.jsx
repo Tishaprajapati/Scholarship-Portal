@@ -40,7 +40,11 @@ const Navbar = () => {
   };
   return (
     <div className="bg-white">
-      <div className="flex items-center justify-between mx-auto max-w-6xl h-20 px-4">
+      {/* <div className="flex items-center justify-between mx-auto max-w-6xl h-20 px-4"> */}
+      <div
+  className="flex items-center justify-between mx-auto max-w-6xl h-20"
+  style={{ paddingLeft: "5%", paddingRight: "5%" }}
+>
         <div className="flex flex-row items-center gap-2">
          <Link to="/" ><img src="/logo.png" className="h-20 w-20 " /></Link>
           <div className="font-bold text-2xl">
@@ -57,11 +61,11 @@ const Navbar = () => {
               <Link to="/Scholarship">Scholarship</Link>
             </li>
             <Link to="/aboutus">
-              <li>about us</li>
+              <li>AboutUs</li>
             </Link>
             <Link to="/contactus">
               {" "}
-              <li>contact us</li>
+              <li>ContactUs</li>
             </Link>
           </ul>
           {!user ? (

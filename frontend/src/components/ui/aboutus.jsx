@@ -6,7 +6,11 @@ const AboutUs = () => {
   return (
     <div className="font-sans">
      {/* Header */}
-     <header className="bg-white px-6 py-4 flex justify-between items-center">
+     {/* <header className="bg-white px-6 py-4 flex justify-between items-center"> */}
+     <header
+  className="bg-white flex justify-between items-center"
+  style={{ paddingLeft: "5%", paddingRight: "5%", paddingTop: "2%", paddingBottom: "2%" }}
+>
      <div className="flex items-center">
 
        <div className="flex flex-row items-center gap-2">

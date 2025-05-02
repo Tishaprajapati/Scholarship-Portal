@@ -6,7 +6,12 @@ const ContactUs = () => {
   return (
     <div className="font-sans">
       {/* Header */}
-      <header className="bg-white px-6 py-4 flex justify-between items-center">
+      {/* <header className="bg-white px-6 py-4 flex justify-between items-center"> */}
+      <header
+  className="bg-white flex justify-between items-center"
+  style={{ padding: "2% 5%" }} // 2% top/bottom, 5% left/right
+>
+
         <div className="flex items-center">
         <div className="flex flex-row items-center gap-2">
          <Link to="/" ><img src="/logo.png" className="h-20 w-20 " /></Link>

@@ -70,7 +70,7 @@ router.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          'Authorization': 'Bearer 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',
+          'Authorization': 'Bearer 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',
           'Content-Type': 'application/json',
         },
       }
